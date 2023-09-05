@@ -100,7 +100,6 @@ function nextMonth() {
 prev.addEventListener("click", prevMonth);
 next.addEventListener("click", nextMonth);
 
-
 todayBtn.addEventListener("click", () => {
     today = new Date();
     month = today.getMonth();
