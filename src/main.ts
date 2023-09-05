@@ -1,8 +1,9 @@
-const calendar = document.querySelector(".calendar")
+const calendar = document.querySelector(".calendar") as HTMLElement
 const date = document.querySelector(".date") as HTMLElement
 const daysContainer = document.querySelector(".days") as HTMLElement
-const prev = document.querySelector(".prev")
-const next = document.querySelector(".next")
+const prev = document.querySelector(".prev") as HTMLElement
+const next = document.querySelector(".next") as HTMLElement
+const todayBtn = document.querySelector(".today-btn") as HTMLElement
 
 let today = new Date();
 let activeDay;
@@ -25,7 +26,6 @@ const months: string[] = [
 ]
 // function to add days
 
-
 function initCalendar() {
     const firstDay = new Date(year, month, 0);
     const lastDay = new Date(year, month + 1, 0);
@@ -35,11 +35,11 @@ function initCalendar() {
     const day = firstDay.getDay();
     const nextDays = 7 - lastDay.getDay();
 
-    //update date on the top 
+    // update date on the top 
 
     date.textContent = months[month] + " " + year;
 
-    //adding days on DOM
+    // adding days on DOM
 
     let days = "";
 
@@ -64,6 +64,7 @@ function initCalendar() {
     }
 
     // next month days
+
     for (let j = 1; j <= nextDays; j++) {
         days += `<div class="day next-date">${j}</div>`;
     }
@@ -96,7 +97,15 @@ function nextMonth() {
 
 // add eventListener on prev and next
 
-prev?.addEventListener("click", prevMonth);
-next?.addEventListener("click", nextMonth);
+prev.addEventListener("click", prevMonth);
+next.addEventListener("click", nextMonth);
 
+// 32.12
 
+todayBtn.addEventListener("click", () => {
+    today = new Date();
+    month = today.getMonth();
+    year = today.getFullYear();
+    initCalendar();
+
+})

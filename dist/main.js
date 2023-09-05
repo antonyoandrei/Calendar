@@ -4,6 +4,7 @@ const date = document.querySelector(".date");
 const daysContainer = document.querySelector(".days");
 const prev = document.querySelector(".prev");
 const next = document.querySelector(".next");
+const todayBtn = document.querySelector(".today-btn");
 let today = new Date();
 let activeDay;
 let month = today.getMonth();
@@ -67,5 +68,11 @@ function nextMonth() {
     }
     initCalendar();
 }
-prev === null || prev === void 0 ? void 0 : prev.addEventListener("click", prevMonth);
-next === null || next === void 0 ? void 0 : next.addEventListener("click", nextMonth);
+prev.addEventListener("click", prevMonth);
+next.addEventListener("click", nextMonth);
+todayBtn.addEventListener("click", () => {
+    today = new Date();
+    month = today.getMonth();
+    year = today.getFullYear();
+    initCalendar();
+});
