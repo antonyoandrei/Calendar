@@ -624,7 +624,7 @@ body {
     }
 }
 
-  @media screen and (max-width: 500px) {
+@media screen and (max-width: 500px) {
     .calendar .month {
       height: 75px;
     }
