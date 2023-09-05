@@ -107,3 +107,32 @@ todayBtn.addEventListener("click", () => {
     year = today.getFullYear();
     initCalendar();
 })
+
+const addEventBtn = document.querySelector(".add-event") as HTMLElement
+const addEventContainer = document.querySelector(".add-event-wrapper") as HTMLElement
+const addEventCloseBtn = document.querySelector(".close") as HTMLElement
+
+
+addEventBtn.addEventListener("click", () => {
+    addEventContainer?.classList.toggle("active");
+});
+
+addEventCloseBtn.addEventListener("click", () => {
+    addEventContainer?.classList.remove("active");
+});
+
+// closes if click outside
+
+document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+
+    if (
+        target !== addEventBtn &&
+        !(addEventContainer.contains(target)) &&
+        target !== addEventContainer
+    ) {
+        addEventContainer.classList.remove("active");
+    }
+});
+
+// 17.48

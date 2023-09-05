@@ -76,3 +76,20 @@ todayBtn.addEventListener("click", () => {
     year = today.getFullYear();
     initCalendar();
 });
+const addEventBtn = document.querySelector(".add-event");
+const addEventContainer = document.querySelector(".add-event-wrapper");
+const addEventCloseBtn = document.querySelector(".close");
+addEventBtn.addEventListener("click", () => {
+    addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.toggle("active");
+});
+addEventCloseBtn.addEventListener("click", () => {
+    addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.remove("active");
+});
+document.addEventListener("click", (e) => {
+    const target = e.target;
+    if (target !== addEventBtn &&
+        !(addEventContainer.contains(target)) &&
+        target !== addEventContainer) {
+        addEventContainer.classList.remove("active");
+    }
+});
