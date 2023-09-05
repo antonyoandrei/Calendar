@@ -100,12 +100,10 @@ function nextMonth() {
 prev.addEventListener("click", prevMonth);
 next.addEventListener("click", nextMonth);
 
-// 32.12
 
 todayBtn.addEventListener("click", () => {
     today = new Date();
     month = today.getMonth();
     year = today.getFullYear();
     initCalendar();
-
 })
