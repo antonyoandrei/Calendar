@@ -450,6 +450,7 @@ body {
     bottom: 100px;
     left: 50%;
     width: 90%;
+    max-height: 0;
     overflow: hidden;
     border-radius: 5px;
     background-color: var(--background-calendar-clr);
@@ -529,13 +530,13 @@ body {
 }
 
 .add-event-footer {
-    display: block;
+    display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
 }
 
-.add-event-btn {
+.add-event-footer .add-event-btn {
     display: flex;
     justify-content: center;
     height: 40px;
@@ -551,7 +552,7 @@ body {
     border: 1px solid var(--primary-clr);
 }
 
-.add-event-btn:hover {
+.add-event-footer .add-event-btn:hover {
     color: var(--primary-clr);
     background-color: transparent;
 }
