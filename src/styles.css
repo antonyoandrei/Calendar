@@ -428,7 +428,7 @@ body {
     pointer-events: none;
 }
 
-.event::after {
+.events .event::after {
     content: "✓";
     position: absolute;
     top: 50%;
@@ -441,7 +441,7 @@ body {
     transform: translateY(-50%);
 }
 
-.event:hover::after {
+.events .event:hover::after {
     display: flex;
 }
 
@@ -653,6 +653,33 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media screen and (max-width: 1000px) {
     body {
