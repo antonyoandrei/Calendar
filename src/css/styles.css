@@ -769,3 +769,7 @@ body.dark-mode {
 .dark-mode .calendar .days .event::after {
     background-color: var(--primary-clr);
 }
+
+.dark-mode .calendar .event:hover::after {
+    background-color: var(--background-calendar-clr);
+}
