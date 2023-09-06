@@ -583,6 +583,77 @@ body {
     pointer-events: none;
 }
 
+.input-container {
+    display: flex;
+}
+
+.toggle-theme {
+    text-align: right;
+    padding: 0.3125rem 0.625rem;
+    margin: 1.5rem;
+}
+  
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 3.75rem;
+    height: 2.125rem;
+}
+    
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--background-calendar-before-clr);
+    transition: 0.3s;
+    border-radius: 2.125rem;
+}
+  
+.dark-mode .slider:before {
+    background-color: var(--background-calendar-before-clr);
+}
+  
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 1.625rem;
+    width: 1.625rem;
+    left: 0.25rem;
+    bottom: 0.25rem;
+    background-color: var(--primary-clr);
+    transition: 0.4s;
+    border-radius: 50%;
+}
+  
+input:checked + .slider {
+    background-color: var(--background-container-clr);
+}
+    
+input:focus + .slider {
+    box-shadow: 0 0 0.2rem transparent;
+}
+    
+input:checked + .slider:before {
+    transform: translateX(1.625rem);
+}
+    
+.slider.round {
+    border-radius: 2.125rem;
+}
+    
+.slider.round:before {
+    border-radius: 50%;
+}
+
 @media screen and (max-width: 1000px) {
     body {
       align-items: flex-start;

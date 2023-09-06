@@ -37,8 +37,16 @@
                 <div class="days"> 
                     <!-- DAYS -->
                 </div>
-                <div class="today">
-                    <button class="today-btn">Today</button>
+                <div class="input-container">
+                    <div class="today">
+                        <button class="today-btn">Today</button>
+                    </div>
+                    <div class="toggle-theme">
+                        <label class="switch">
+                            <input type="checkbox" id="themeSwitch">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,10 +69,10 @@
                         <input type="text" placeholder="Title" class="event-name">
                     </div>
                     <div class="add-event-input">
-                        <input type="date" placeholder="Initial date" class="event-time-from">
+                        <input type="datetime-local" placeholder="Initial date" class="event-time-from">
                     </div>
                     <div class="add-event-input">
-                        <input type="date" placeholder="End date" class="event-time-to">
+                        <input type="datetime-local" placeholder="End date" class="event-time-to">
                     </div>
                     <div class="add-event-input">
                         <input type="textarea" placeholder="Description" class="description">
