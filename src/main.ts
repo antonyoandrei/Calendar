@@ -380,23 +380,48 @@ function updateEvents(date:any){
 
 }
 
+const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+    if (!link) {
+        const newLink = document.createElement('link');
+        newLink.rel = 'icon';
+        newLink.id = 'favicon';
+        newLink.href = '/assets/img/icon.png';
+        document.head.appendChild(newLink);
+    } else {
+        link.href = '/assets/img/icon.png';
+};
+
 let theme: string = "light-mode";
 
 function toggleTheme() {
     const calendar: HTMLElement | null = document.querySelector("body");
+    const logoLight: HTMLElement | null = document.getElementById("logo-light");
+    const logoDark: HTMLElement | null = document.getElementById("logo-dark");
 
     if (theme === "light-mode") {
         theme = "dark-mode";
-            calendar?.classList.remove("light-mode");
-            calendar?.classList.add("dark-mode");
+        calendar?.classList.remove("light-mode");
+        calendar?.classList.add("dark-mode");
+        logoLight?.classList.add("hidden");
+        logoDark?.classList.remove("hidden");
+        const favicon: HTMLLinkElement | null = document.getElementById('favicon') as HTMLLinkElement | null;
+        if (favicon) {
+            favicon.href = '/assets/img/icon-dark.png';
+        }
     } else {
         theme = "light-mode";
-            calendar?.classList.remove("dark-mode");
-            calendar?.classList.add("light-mode");
+        calendar?.classList.remove("dark-mode");
+        calendar?.classList.add("light-mode");
+        logoLight?.classList.remove("hidden");
+        logoDark?.classList.add("hidden");
+        const favicon: HTMLLinkElement | null = document.getElementById('favicon') as HTMLLinkElement | null;
+        if (favicon) {
+            favicon.href = '/assets/img/icon.png';
+        }
     }
 }
 
-const themeSwitch = document.getElementById("themeSwitch") as HTMLInputElement;
+const themeSwitch: HTMLInputElement | null = document.getElementById("themeSwitch") as HTMLInputElement | null;
 if (themeSwitch) {
     themeSwitch.addEventListener("click", toggleTheme);
 }
