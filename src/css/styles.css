@@ -1,5 +1,4 @@
 @import "reset.css";
-@import "responsive.css";
 
 :root {
     --primary-clr: #deff98;
@@ -318,9 +317,9 @@ body {
     gap: 5px;
     padding: 0 20px;
     padding-left: 50px;
-    color: var(--secondary-clr);
+    color: var(--primary-light-clr);
     cursor: pointer;
-    background: linear-gradient(90deg, var(--background-calendar-clr), transparent);
+    background: linear-gradient(90deg, var(--background-before-light-clr), transparent);
 }
 
 .events .event:nth-child(even) {
@@ -328,7 +327,7 @@ body {
 }
 
 .events .event:hover {
-    background: linear-gradient(90deg, var(--background-calendar-before-clr), transparent);
+    background: linear-gradient(90deg, var(--background-ba-light-clr), transparent);
 }
 
 .events .event .title {
@@ -344,24 +343,24 @@ body {
 }
 
 .events .event .title i {
-    color: var(--primary-clr);
+    color: var(--primary-light-clr);
     font-size: var(--fs-1);
 }
 
 .event .event:hover .title i,
 .events .event:hover .event-time  {
-    color: var(--primary-clr);
+    color: var(--primary-light-clr);
 }
 
 .event:hover,
 .events .event .title i:hover {
-    color: var(--primary-clr);
+    color: var(--primary-light-clr);
 }
 
 .events .event .event-time {
     font-size: var(--fs-1);
     font-weight: var(--fw-1);
-    color: var(--secondary-clr);
+    color: var(--primary-light-clr);
     margin-left: 15px;
     pointer-events: none;
 }
@@ -375,7 +374,7 @@ body {
     display: flex;
     align-items: center;
     opacity: 0.3;
-    color: var(--secondary-clr);
+    color: var(--primary-light-clr);
     transform: translateY(-50%);
 }
 
@@ -772,4 +771,95 @@ body.dark-mode {
 
 .dark-mode .calendar .event:hover::after {
     background-color: var(--background-calendar-clr);
+}
+
+.dark-mode .events .event:nth-child(even) {
+    background: transparent;
+}
+
+.dark-mode .events .event {
+    color: var(--primary-clr);
+    background: linear-gradient(90deg, var(--background-calendar-before-clr), transparent);
+}
+
+.dark-mode .events .event:hover {
+    background: linear-gradient(90deg, var(--background-calendar-ba-clr), transparent);
+}
+
+.dark-mode .events .event .title i {
+    color: var(--primary-clr);
+}
+
+.dark-mode .event:hover,
+.dark-mode .events .event .title i:hover {
+    color: var(--primary-clr);
+}
+
+.dark-mode .events .event .event-time {
+    color: var(--primary-clr);
+}
+
+.events .event::after {
+    color: var(--primary-clr);
+}
+
+@media screen and (max-width: 1000px) {
+    body {
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+    .container {
+      min-height: 100vh;
+      flex-direction: column;
+      border-radius: 0;
+    }
+    .container .left {
+      width: 100%;
+      height: 100%;
+      padding: 20px 0;
+    }
+    .container .right {
+      width: 100%;
+      height: 100%;
+      padding: 20px 0;
+    }
+    .calendar::before,
+    .calendar::after {
+      top: 100%;
+      left: 50%;
+      width: 97%;
+      height: 12px;
+      border-radius: 0 0 5px 5px;
+      transform: translateX(-50%);
+    }
+    .calendar::before {
+      width: 94%;
+      top: calc(100% + 12px);
+    }
+    .events {
+      padding-bottom: 340px;
+    }
+    .add-event-wrapper {
+      bottom: 100px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .calendar .month {
+      height: 75px;
+    }
+    .calendar .weekdays {
+      height: 50px;
+    }
+    .calendar .days .day {
+      height: 40px;
+      font-size: 0.8rem;
+    }
+    .calendar .days .day.active,
+    .calendar .days .day.today {
+      font-size: 1rem;
+    }
+    .right .today-date {
+      padding: 20px;
+    }
 }
