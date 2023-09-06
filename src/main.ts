@@ -28,8 +28,6 @@ const months: string[] = [
     "December"
 ]
 
-
-
 //default events array
 const eventsArr = [
 {
@@ -107,7 +105,6 @@ function initCalendar() {
                 event=true;
             }
         });
-
 
         // if day is today add class today
         if (
