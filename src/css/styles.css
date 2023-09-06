@@ -409,11 +409,11 @@ body {
     border-radius: 5px;
     background-color: var(--background-ba-light-clr);
     transform: translateX(-50%);
-    transition: max-height 0.5s;
+    transition: max-height 1s;
 }
 
 .add-event-wrapper.active {
-    max-height: 1000px;
+    max-height: 400px;
 }
 
 .add-event-header {
