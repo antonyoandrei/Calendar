@@ -8,6 +8,7 @@ const todayBtn = document.querySelector(".today-btn");
 const eventDay = document.querySelector(".event-day");
 const eventDate = document.querySelector(".event-date");
 const eventsContainer = document.querySelector(".events");
+const addEventSubmit = document.querySelector(".add-event-btn");
 let today = new Date();
 let activeDay;
 let month = today.getMonth();
@@ -26,38 +27,8 @@ const months = [
     "November",
     "December"
 ];
-const eventsArr = [
-    {
-        day: 6,
-        month: 9,
-        year: 2023,
-        events: [
-            {
-                title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
-                time: "10:00 AM",
-            },
-            {
-                title: "Event 2",
-                time: "11:00 AM",
-            },
-        ],
-    },
-    {
-        day: 18,
-        month: 9,
-        year: 2023,
-        events: [
-            {
-                title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
-                time: "10:00 AM",
-            },
-            {
-                title: "Event 2",
-                time: "11:00 AM",
-            },
-        ],
-    },
-];
+let eventsArr = [];
+getEvents();
 function initCalendar() {
     const firstDay = new Date(year, month, 0);
     const lastDay = new Date(year, month + 1, 0);
@@ -235,22 +206,147 @@ function updateEvents(date) {
                 </div>`;
     }
     eventsContainer.innerHTML = events;
+    saveEvents();
 }
+const link = document.querySelector("link[rel~='icon']");
+if (!link) {
+    const newLink = document.createElement('link');
+    newLink.rel = 'icon';
+    newLink.id = 'favicon';
+    newLink.href = '/assets/img/icon.png';
+    document.head.appendChild(newLink);
+}
+else {
+    link.href = '/assets/img/icon.png';
+}
+;
 let theme = "light-mode";
 function toggleTheme() {
     const calendar = document.querySelector("body");
+    const logoLight = document.getElementById("logo-light");
+    const logoDark = document.getElementById("logo-dark");
     if (theme === "light-mode") {
         theme = "dark-mode";
         calendar === null || calendar === void 0 ? void 0 : calendar.classList.remove("light-mode");
         calendar === null || calendar === void 0 ? void 0 : calendar.classList.add("dark-mode");
+        logoLight === null || logoLight === void 0 ? void 0 : logoLight.classList.add("hidden");
+        logoDark === null || logoDark === void 0 ? void 0 : logoDark.classList.remove("hidden");
+        const favicon = document.getElementById('favicon');
+        if (favicon) {
+            favicon.href = '/assets/img/icon-dark.png';
+        }
     }
     else {
         theme = "light-mode";
         calendar === null || calendar === void 0 ? void 0 : calendar.classList.remove("dark-mode");
         calendar === null || calendar === void 0 ? void 0 : calendar.classList.add("light-mode");
+        logoLight === null || logoLight === void 0 ? void 0 : logoLight.classList.remove("hidden");
+        logoDark === null || logoDark === void 0 ? void 0 : logoDark.classList.add("hidden");
+        const favicon = document.getElementById('favicon');
+        if (favicon) {
+            favicon.href = '/assets/img/icon.png';
+        }
     }
 }
 const themeSwitch = document.getElementById("themeSwitch");
 if (themeSwitch) {
     themeSwitch.addEventListener("click", toggleTheme);
+}
+addEventSubmit.addEventListener("click", () => {
+    const eventTitle = addEventTitle.value;
+    const eventTimeFrom = addEventFrom.value;
+    const eventTimeTo = addEventTo.value;
+    if (eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "") {
+        alert("Please fill all the fields");
+        return;
+    }
+    const timeFromArr = eventTimeFrom.split(":");
+    const timeToArr = eventTimeTo.split(":");
+    if (timeFromArr.length != 2 ||
+        timeToArr.length != 2 ||
+        timeFromArr[0] > 23 ||
+        timeFromArr[1] > 59 ||
+        timeToArr[0] > 23 ||
+        timeToArr[1] > 59) {
+        alert("Invalid time format");
+    }
+    const timeFrom = convertTime(eventTimeFrom);
+    const timeTo = convertTime(eventTimeTo);
+    const newEvent = {
+        title: eventTitle,
+        time: timeFrom + " - " + timeTo,
+    };
+    let eventAdded = false;
+    if (eventsArr.length > 0) {
+        eventsArr.forEach((item) => {
+            if (item.day === activeDay &&
+                item.month === month + 1 &&
+                item.year === year) {
+                item.events.push(newEvent);
+                eventAdded = true;
+            }
+        });
+    }
+    if (!eventAdded) {
+        eventsArr.push({
+            day: activeDay,
+            month: month + 1,
+            year: year,
+            events: [newEvent]
+        });
+    }
+    addEventContainer.classList.remove('active');
+    addEventTitle.value = "";
+    addEventFrom.value = "";
+    addEventTo.value = "";
+    updateEvents(activeDay);
+    const activeDayElem = document.querySelector(".day-active");
+    if (!(activeDayElem === null || activeDayElem === void 0 ? void 0 : activeDayElem.classList.contains("event"))) {
+        activeDayElem === null || activeDayElem === void 0 ? void 0 : activeDayElem.classList.add("event");
+    }
+});
+function convertTime(time) {
+    let timeArr = time.split(":");
+    let timeHour = timeArr[0];
+    let timeMin = timeArr[1];
+    let timeFormat = timeHour >= 12 ? "PM" : "AM";
+    timeHour = timeHour % 12 || 12;
+    time = timeHour + ":" + timeMin + " " + timeFormat;
+    return time;
+}
+eventsContainer.addEventListener("click", (e) => {
+    const target = e.target;
+    if (target.classList.contains("event")) {
+        const eventTitle = target.children[0].children[1].innerHTML;
+        eventsArr.forEach((event) => {
+            if (event.day === activeDay &&
+                event.month === month + 1 &&
+                event.year === year) {
+                event.events.forEach((item, index) => {
+                    if (item.title === eventTitle) {
+                        event.events.splice(index, 1);
+                    }
+                });
+                if (event.events.length === 0) {
+                    eventsArr.splice(eventsArr.indexOf(event), 1);
+                    const activeDayElem = document.querySelector(".day.active");
+                    if (activeDayElem.classList.contains("event")) {
+                        activeDayElem.classList.remove("event");
+                    }
+                }
+            }
+        });
+        updateEvents(activeDay);
+    }
+});
+function saveEvents() {
+    localStorage.setItem("events", JSON.stringify(eventsArr));
+}
+function getEvents() {
+    const storedEvents = localStorage.getItem("events");
+    if (storedEvents === null) {
+        return;
+    }
+    const parsedEvents = JSON.parse(storedEvents);
+    eventsArr.push(...parsedEvents);
 }

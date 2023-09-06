@@ -7,9 +7,10 @@ const todayBtn = document.querySelector(".today-btn") as HTMLElement
 const eventDay = document.querySelector(".event-day") as HTMLElement;
 const eventDate = document.querySelector(".event-date") as HTMLElement;
 const eventsContainer= document.querySelector(".events") as HTMLElement;
+const addEventSubmit = document.querySelector(".add-event-btn") as HTMLElement;
 
 let today = new Date();
-let activeDay;
+let activeDay:any;
 let month = today.getMonth();
 let year = today.getFullYear();
 
@@ -29,7 +30,7 @@ const months: string[] = [
 ]
 
 //default events array
-const eventsArr = [
+/* const eventsArr = [
 {
     day: 6,
     month: 9,
@@ -60,7 +61,15 @@ const eventsArr = [
       },
      ],
    },
- ];
+ ]; */
+
+//set a empty array
+ let eventsArr: any[]=[];
+
+ //then call get
+
+ getEvents();
+
 
 // function to add days
 
@@ -94,7 +103,7 @@ function initCalendar() {
         //check if event present on current day
 
         let event = false;
-        eventsArr.forEach((eventObj) =>{
+        eventsArr.forEach((eventObj:any) =>{
             if(
                 eventObj.day === i &&
                 eventObj.month === month +1 &&
@@ -338,7 +347,7 @@ function updateEvents(date:any){
 
             // then show event on document
 
-            event.events.forEach((event)=>{
+            event.events.forEach((event:any)=>{
                 events += `
                 <div class="event">
                     <div class="title">
@@ -363,28 +372,210 @@ function updateEvents(date:any){
     }
 
     eventsContainer.innerHTML = events;
+    //save events when update event called
+    saveEvents();
+
 }
+
+const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+    if (!link) {
+        const newLink = document.createElement('link');
+        newLink.rel = 'icon';
+        newLink.id = 'favicon';
+        newLink.href = '/assets/img/icon.png';
+        document.head.appendChild(newLink);
+    } else {
+        link.href = '/assets/img/icon.png';
+};
 
 let theme: string = "light-mode";
 
 function toggleTheme() {
     const calendar: HTMLElement | null = document.querySelector("body");
+    const logoLight: HTMLElement | null = document.getElementById("logo-light");
+    const logoDark: HTMLElement | null = document.getElementById("logo-dark");
 
     if (theme === "light-mode") {
         theme = "dark-mode";
-            calendar?.classList.remove("light-mode");
-            calendar?.classList.add("dark-mode");
+        calendar?.classList.remove("light-mode");
+        calendar?.classList.add("dark-mode");
+        logoLight?.classList.add("hidden");
+        logoDark?.classList.remove("hidden");
+        const favicon: HTMLLinkElement | null = document.getElementById('favicon') as HTMLLinkElement | null;
+        if (favicon) {
+            favicon.href = '/assets/img/icon-dark.png';
+        }
     } else {
         theme = "light-mode";
-            calendar?.classList.remove("dark-mode");
-            calendar?.classList.add("light-mode");
+        calendar?.classList.remove("dark-mode");
+        calendar?.classList.add("light-mode");
+        logoLight?.classList.remove("hidden");
+        logoDark?.classList.add("hidden");
+        const favicon: HTMLLinkElement | null = document.getElementById('favicon') as HTMLLinkElement | null;
+        if (favicon) {
+            favicon.href = '/assets/img/icon.png';
+        }
     }
 }
 
-const themeSwitch = document.getElementById("themeSwitch") as HTMLInputElement;
+const themeSwitch: HTMLInputElement | null = document.getElementById("themeSwitch") as HTMLInputElement | null;
 if (themeSwitch) {
     themeSwitch.addEventListener("click", toggleTheme);
 }
+
+//lets create function to add events
+addEventSubmit.addEventListener("click", () => {
+    const eventTitle = addEventTitle.value;
+    const eventTimeFrom = addEventFrom.value;
+    const eventTimeTo = addEventTo.value;
+
+    //Some validations
+    if(eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "")
+    {
+        alert("Please fill all the fields");
+        return;
+    }
+
+    const timeFromArr = eventTimeFrom.split(":");
+    const timeToArr = eventTimeTo.split(":");
+
+    if(
+        timeFromArr.length != 2 ||
+        timeToArr.length != 2 ||
+        timeFromArr [0] > 23 ||
+        timeFromArr [1] > 59 ||
+        timeToArr [0] > 23 ||
+        timeToArr [1] > 59
+    ){
+        alert("Invalid time format");
+    } 
+    //verificar si hace falta
+
+    const timeFrom = convertTime(eventTimeFrom);
+    const timeTo = convertTime(eventTimeTo);  
+
+    const newEvent = {
+        title: eventTitle,
+        time: timeFrom + " - " + timeTo,
+    };
+
+    let eventAdded = false;
+
+    //check if eventarr not empty
+    if(eventsArr.length > 0) {
+        //check if current day has already any event then add to that
+        eventsArr.forEach((item) => {
+        if(
+            item.day === activeDay && 
+            item.month === month +1 &&
+            item.year === year
+        ){
+            item.events.push(newEvent);
+            eventAdded = true;
+        }
+        });
+    }
+
+
+    //if event array empty or current day has no event create new
+
+    if(!eventAdded){
+        eventsArr.push({
+            day: activeDay,
+            month: month +1,
+            year: year,
+            events: [newEvent]
+        })
+    }
+
+    //remove active from add event form
+    addEventContainer.classList.remove('active')
+    //clear the fields
+    addEventTitle.value = "";
+    addEventFrom.value = "";
+    addEventTo.value = "";
+
+    //show current added event
+
+    updateEvents(activeDay);
+
+    //also add event class to newly added day if not already
+
+    const activeDayElem = document.querySelector(".day-active");
+    if(!activeDayElem?.classList.contains("event")){
+        activeDayElem?.classList.add("event");
+    }
+
+
+});
+
+ function convertTime(time:any){
+    let timeArr = time.split(":");
+    let timeHour = timeArr[0];
+    let timeMin = timeArr[1];
+    let timeFormat = timeHour >= 12 ? "PM" : "AM";
+    timeHour = timeHour % 12 || 12;
+    time = timeHour + ":" + timeMin + " " + timeFormat;
+    return time;
+}
+
+//lets create a function to remove events on click
+
+eventsContainer.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    if (target.classList.contains("event")){
+        const eventTitle = target.children[0].children[1].innerHTML;
+        //get the title of event than search in array by title and delete
+        eventsArr.forEach((event) =>{
+            if(
+                event.day === activeDay &&
+                event.month === month + 1 &&
+                event.year === year
+            ){
+                event.events.forEach((item:any, index:any) =>{
+                    if(item.title === eventTitle){
+                        event.events.splice(index, 1);
+                    }
+                });
+
+                //if no event remaing on that day remove complete day
+
+                if(event.events.length === 0){
+                    eventsArr.splice(eventsArr.indexOf(event), 1);
+                    //after remove complete day remove active class of that day
+
+                    const activeDayElem= document.querySelector(".day.active") as HTMLElement;
+                    if(activeDayElem.classList.contains("event")){
+                        activeDayElem.classList.remove("event");
+                    }
+
+                }
+
+            }
+        });
+        // after removing from array update event
+        updateEvents(activeDay);
+    }
+});
+
+//lets store events in local storage get from there
+
+function saveEvents(){
+    localStorage.setItem("events", JSON.stringify(eventsArr));
+}
+
+function getEvents() {
+    const storedEvents = localStorage.getItem("events");
+    
+    if (storedEvents === null) {
+        return;
+    }
+
+    const parsedEvents = JSON.parse(storedEvents);
+
+    eventsArr.push(...parsedEvents);
+}
+
 
 
 
