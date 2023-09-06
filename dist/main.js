@@ -153,6 +153,11 @@ document.addEventListener("click", (e) => {
         addEventContainer.classList.remove("active");
     }
 });
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        addEventContainer.classList.remove("active");
+    }
+});
 addEventTitle.addEventListener("input", (e) => {
     addEventTitle.value = addEventTitle.value.slice(0, 50);
 });
@@ -230,4 +235,22 @@ function updateEvents(date) {
                 </div>`;
     }
     eventsContainer.innerHTML = events;
+}
+let theme = "light-mode";
+function toggleTheme() {
+    const calendar = document.querySelector("body");
+    if (theme === "light-mode") {
+        theme = "dark-mode";
+        calendar === null || calendar === void 0 ? void 0 : calendar.classList.remove("light-mode");
+        calendar === null || calendar === void 0 ? void 0 : calendar.classList.add("dark-mode");
+    }
+    else {
+        theme = "light-mode";
+        calendar === null || calendar === void 0 ? void 0 : calendar.classList.remove("dark-mode");
+        calendar === null || calendar === void 0 ? void 0 : calendar.classList.add("light-mode");
+    }
+}
+const themeSwitch = document.getElementById("themeSwitch");
+if (themeSwitch) {
+    themeSwitch.addEventListener("click", toggleTheme);
 }

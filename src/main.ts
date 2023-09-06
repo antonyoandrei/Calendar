@@ -214,6 +214,12 @@ document.addEventListener("click", (e) => {
     }
 });
 
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        addEventContainer.classList.remove("active");
+    }
+});
+
 //allow only 50 chars in tittle
 addEventTitle.addEventListener("input",(e) =>{
     addEventTitle.value = addEventTitle.value.slice(0, 50);
@@ -362,6 +368,26 @@ function updateEvents(date:any){
     eventsContainer.innerHTML = events;
 }
 
+let theme: string = "light-mode";
+
+function toggleTheme() {
+    const calendar: HTMLElement | null = document.querySelector("body");
+
+    if (theme === "light-mode") {
+        theme = "dark-mode";
+            calendar?.classList.remove("light-mode");
+            calendar?.classList.add("dark-mode");
+    } else {
+        theme = "light-mode";
+            calendar?.classList.remove("dark-mode");
+            calendar?.classList.add("light-mode");
+    }
+}
+
+const themeSwitch = document.getElementById("themeSwitch") as HTMLInputElement;
+if (themeSwitch) {
+    themeSwitch.addEventListener("click", toggleTheme);
+}
 
 
 
