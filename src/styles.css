@@ -459,7 +459,7 @@ body {
 }
 
 .add-event-wrapper.active {
-    max-height: 300px;
+    max-height: 1000px;
 }
 
 .add-event-header {
