@@ -4,6 +4,9 @@ const daysContainer = document.querySelector(".days") as HTMLElement
 const prev = document.querySelector(".prev") as HTMLElement
 const next = document.querySelector(".next") as HTMLElement
 const todayBtn = document.querySelector(".today-btn") as HTMLElement
+const eventDay = document.querySelector(".event-day") as HTMLElement;
+const eventDate = document.querySelector(".event-date") as HTMLElement;
+const eventsContainer= document.querySelector(".events") as HTMLElement;
 
 let today = new Date();
 let activeDay;
@@ -30,7 +33,7 @@ const months: string[] = [
 //default events array
 const eventsArr = [
 {
-    day: 16,
+    day: 6,
     month: 9,
     year: 2023,
     events: [
@@ -112,6 +115,9 @@ function initCalendar() {
             year === new Date().getFullYear() &&
             month === new Date().getMonth()
         ) {
+            activeDay = i;
+            getActiveDay(i);
+            updateEvents(i);
             /* days += `<div class="day today active">${i}</div>`; */ //El tio lo borra
             //if event found also add event class
             //add active on today at startup
@@ -250,8 +256,13 @@ function addListner() {
     days.forEach((day) => {
         day.addEventListener("click",(e) => {
             const target = e.target as HTMLElement;
+
             //set current day as active day
             activeDay = Number(target.innerHTML);
+
+            //call active day after click
+            getActiveDay(target.innerHTML);
+            updateEvents(Number(target.innerHTML));
 
             //remove active from already active day
 
@@ -299,6 +310,56 @@ function addListner() {
             }
         });
     });
+}
+
+//lets show active day events and date at top
+
+function getActiveDay(date: any){
+    const day = new Date(year, month, date);
+    const dayName = day.toString().split(' ')[0];
+    eventDay.innerHTML=dayName;
+    eventDate.innerHTML= date + " " + months[month] + " " + year;
+}
+
+
+//function to show events of that day
+function updateEvents(date:any){
+    let events = "";
+    eventsArr.forEach((event)=>{
+        // get events at active day only
+        if(
+            date === event.day &&
+            month + 1 === event.month &&
+            year === event.year
+        ){
+
+            // then show event on document
+
+            event.events.forEach((event)=>{
+                events += `
+                <div class="event">
+                    <div class="title">
+                        <i class="fas fa-circle"></i>
+                        <h3 class="event-title">${event.title}</h3>
+                    </div>
+                    <div class="event-time">
+                        <span class="event-time">${event.time}</span>
+                    </div>
+                </div>
+                `;
+            });
+        }
+    });
+
+    //if nothing found
+
+    if((events === "")){
+        events = `<div class="no-event">
+                    <h3>No Events</h3>
+                </div>`;
+    }
+
+    eventsContainer.innerHTML = events;
 }
 
 
