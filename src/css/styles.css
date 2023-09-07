@@ -61,6 +61,7 @@
 
 body {
     min-height: 100vh;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -413,6 +414,10 @@ body {
 }
 
 .add-event-wrapper.active {
+    max-height: 600px;
+}
+
+.add-event-wrapper.active-day-click {
     max-height: 600px;
 }
 
@@ -826,6 +831,28 @@ body.dark-mode {
     color: var(--primary-clr);
 }
 
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 5rem;
+    margin-right: 5rem;
+    gap: 5rem;
+    align-items: center;
+}
+
+.header-info {
+    display: flex;
+    font-size: 6rem;
+    font-weight: var(--fw-3);
+    gap: 1rem;
+    text-align: center;
+    color: var(--primary-light-clr);
+}
+
+.dark-mode .header-info {
+    color: var(--primary-clr);
+}
+
 .footer-container {
     display: flex;
     justify-content: space-between;
@@ -876,6 +903,10 @@ body.dark-mode {
 
 .logo {
     width: 50px;
+}
+
+.logo-header {
+    width: 80px;
 }
 
 .hidden {
@@ -1019,10 +1050,51 @@ option:checked,
     transition: background-color 0.2s ease-in;
 }
 
+.day {
+    position: relative;
+}
+
+.day::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -200%);
+    background-image: url('/assets/img/plus.png');
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.day:hover::after {
+    opacity: 1;
+}
+
+.dark-mode .day::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -200%);
+    background-image: url('/assets/img/plus-dark.png');
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dark-mode .day:hover::after {
+    opacity: 1;
+}
+
 @media screen and (max-width: 1000px) {
     body {
       align-items: flex-start;
       justify-content: flex-start;
+      flex-direction: initial;
     }
 
     .container {
@@ -1095,10 +1167,18 @@ option:checked,
     .credits {
         display: none;
     }
+    
+    .header-container {
+        display: none;
+    }
 }
 
 @media screen and (max-width:400px) {
     .footer-container {
+        display: none;
+    }
+
+    .header-container {
         display: none;
     }
 }

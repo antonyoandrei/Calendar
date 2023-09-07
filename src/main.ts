@@ -154,7 +154,7 @@ function initCalendar() {
     }
     daysContainer.innerHTML = days;
     //add listener after calender initalized
-    addListner();
+    addListener();
 }
 
 initCalendar();
@@ -209,13 +209,14 @@ function getActiveDay(date: any) {
 }
 
 
-const addEventBtn = document.querySelector(".add-event") as HTMLElement
-const addEventContainer = document.querySelector(".add-event-wrapper") as HTMLElement
-const addEventCloseBtn = document.querySelector(".close") as HTMLElement
-const addEventTitle = document.querySelector(".event-name") as HTMLFormElement
-const addEventTo = document.querySelector(".event-time-to") as HTMLFormElement
-const description = document.querySelector(".description") as HTMLFormElement
-const addEventActivity = document.querySelector(".event-select") as HTMLFormElement
+const addEventBtn = document.querySelector(".add-event") as HTMLElement;
+const addEventContainer = document.querySelector(".add-event-wrapper") as HTMLElement;
+const addEventCloseBtn = document.querySelector(".close") as HTMLElement;
+const addEventTitle = document.querySelector(".event-name") as HTMLFormElement;
+
+const addEventTo = document.querySelector(".event-time-to") as HTMLFormElement;
+const description = document.querySelector(".description") as HTMLFormElement;
+const addEventActivity = document.querySelector(".event-select") as HTMLFormElement;
 
 addEventBtn.addEventListener("click", () => {
 
@@ -230,6 +231,18 @@ addEventBtn.addEventListener("click", () => {
 
     addEventTo.value = "";
     description.value = "";
+});
+
+const days = document.querySelectorAll(".day");
+
+days.forEach(day => {
+    day.addEventListener("click", () => {
+        addEventContainer.classList.toggle("active-day-click");
+        addEventTitle.value = "";
+        // addEventFrom.value = "";
+        addEventTo.value = "";
+        description.value = "";
+    });
 });
 
 addEventCloseBtn.addEventListener("click", () => {
@@ -308,7 +321,7 @@ addEventTo.addEventListener("input",(e) =>{
 }); */
 
 //lets create function to add listener on days after rendered
-function addListner() {
+function addListener() {
     const days = document.querySelectorAll(".day");
     days.forEach((day) => {
         day.addEventListener("click", (e) => {
@@ -426,17 +439,24 @@ if (!link) {
 let theme: string = "light-mode";
 
 function toggleTheme() {
-    const calendar: HTMLElement | null = document.querySelector("body");
-    const logoLight: HTMLElement | null = document.getElementById("logo-light");
-    const logoDark: HTMLElement | null = document.getElementById("logo-dark");
+    const calendar = document.querySelector("body");
+    const logoLightHeader = document.getElementById("logoLightHeader");
+    const logoDarkHeader = document.getElementById("logoDarkHeader");
+    const logoLight = document.getElementById("logoLight");
+    const logoDark = document.getElementById("logoDark");
 
     if (theme === "light-mode") {
         theme = "dark-mode";
         calendar?.classList.remove("light-mode");
         calendar?.classList.add("dark-mode");
+
+        logoLightHeader?.classList.add("hidden");
+        logoDarkHeader?.classList.remove("hidden");
+
         logoLight?.classList.add("hidden");
         logoDark?.classList.remove("hidden");
-        const favicon: HTMLLinkElement | null = document.getElementById('favicon') as HTMLLinkElement | null;
+
+        const favicon = document.getElementById('favicon') as HTMLLinkElement;
         if (favicon) {
             favicon.href = '/assets/img/icon-dark.png';
         }
@@ -444,14 +464,20 @@ function toggleTheme() {
         theme = "light-mode";
         calendar?.classList.remove("dark-mode");
         calendar?.classList.add("light-mode");
+
+        logoLightHeader?.classList.remove("hidden");
+        logoDarkHeader?.classList.add("hidden");
+
         logoLight?.classList.remove("hidden");
         logoDark?.classList.add("hidden");
-        const favicon: HTMLLinkElement | null = document.getElementById('favicon') as HTMLLinkElement | null;
+
+        const favicon = document.getElementById('favicon') as HTMLLinkElement;
         if (favicon) {
             favicon.href = '/assets/img/icon.png';
         }
     }
 }
+
 
 const themeSwitch: HTMLInputElement | null = document.getElementById("themeSwitch") as HTMLInputElement | null;
 if (themeSwitch) {
