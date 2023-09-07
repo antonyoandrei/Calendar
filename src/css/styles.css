@@ -826,6 +826,28 @@ body.dark-mode {
     color: var(--primary-clr);
 }
 
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 5rem;
+    margin-right: 5rem;
+    gap: 5rem;
+    align-items: center;
+}
+
+.header-info {
+    display: flex;
+    font-size: 6rem;
+    font-weight: var(--fw-3);
+    gap: 1rem;
+    text-align: center;
+    color: var(--primary-light-clr);
+}
+
+.dark-mode .header-info {
+    color: var(--primary-clr);
+}
+
 .footer-container {
     display: flex;
     justify-content: space-between;
@@ -876,6 +898,10 @@ body.dark-mode {
 
 .logo {
     width: 50px;
+}
+
+.logo-header {
+    width: 80px;
 }
 
 .hidden {
@@ -1095,10 +1121,18 @@ option:checked,
     .credits {
         display: none;
     }
+    
+    .header-container {
+        display: none;
+    }
 }
 
 @media screen and (max-width:400px) {
     .footer-container {
+        display: none;
+    }
+
+    .header-container {
         display: none;
     }
 }

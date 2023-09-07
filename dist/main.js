@@ -241,12 +241,16 @@ else {
 let theme = "light-mode";
 function toggleTheme() {
     const calendar = document.querySelector("body");
-    const logoLight = document.getElementById("logo-light");
-    const logoDark = document.getElementById("logo-dark");
+    const logoLightHeader = document.getElementById("logoLightHeader");
+    const logoDarkHeader = document.getElementById("logoDarkHeader");
+    const logoLight = document.getElementById("logoLight");
+    const logoDark = document.getElementById("logoDark");
     if (theme === "light-mode") {
         theme = "dark-mode";
         calendar === null || calendar === void 0 ? void 0 : calendar.classList.remove("light-mode");
         calendar === null || calendar === void 0 ? void 0 : calendar.classList.add("dark-mode");
+        logoLightHeader === null || logoLightHeader === void 0 ? void 0 : logoLightHeader.classList.add("hidden");
+        logoDarkHeader === null || logoDarkHeader === void 0 ? void 0 : logoDarkHeader.classList.remove("hidden");
         logoLight === null || logoLight === void 0 ? void 0 : logoLight.classList.add("hidden");
         logoDark === null || logoDark === void 0 ? void 0 : logoDark.classList.remove("hidden");
         const favicon = document.getElementById('favicon');
@@ -258,6 +262,8 @@ function toggleTheme() {
         theme = "light-mode";
         calendar === null || calendar === void 0 ? void 0 : calendar.classList.remove("dark-mode");
         calendar === null || calendar === void 0 ? void 0 : calendar.classList.add("light-mode");
+        logoLightHeader === null || logoLightHeader === void 0 ? void 0 : logoLightHeader.classList.remove("hidden");
+        logoDarkHeader === null || logoDarkHeader === void 0 ? void 0 : logoDarkHeader.classList.add("hidden");
         logoLight === null || logoLight === void 0 ? void 0 : logoLight.classList.remove("hidden");
         logoDark === null || logoDark === void 0 ? void 0 : logoDark.classList.add("hidden");
         const favicon = document.getElementById('favicon');
