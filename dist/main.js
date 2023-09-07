@@ -110,11 +110,21 @@ const addEventCloseBtn = document.querySelector(".close");
 const addEventTitle = document.querySelector(".event-name");
 const addEventFrom = document.querySelector(".event-time-from");
 const addEventTo = document.querySelector(".event-time-to");
+const description = document.querySelector(".description");
+const addEventActivity = document.querySelector(".event-select");
 addEventBtn.addEventListener("click", () => {
-    addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.toggle("active");
+    addEventContainer.classList.toggle("active");
+    addEventTitle.value = "";
+    addEventFrom.value = "";
+    addEventTo.value = "";
+    description.value = "";
 });
 addEventCloseBtn.addEventListener("click", () => {
     addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.remove("active");
+    addEventTitle.value = "";
+    addEventFrom.value = "";
+    addEventTo.value = "";
+    description.value = "";
 });
 document.addEventListener("click", (e) => {
     const target = e.target;
@@ -122,11 +132,19 @@ document.addEventListener("click", (e) => {
         !(addEventContainer.contains(target)) &&
         target !== addEventContainer) {
         addEventContainer.classList.remove("active");
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
+        description.value = "";
     }
 });
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
         addEventContainer.classList.remove("active");
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
+        description.value = "";
     }
 });
 addEventTitle.addEventListener("input", (e) => {
@@ -190,7 +208,7 @@ function updateEvents(date) {
                 <div class="event">
                     <div class="title">
                         <i class="fas fa-circle"></i>
-                        <h3 class="event-title">${event.title}</h3>
+                        <h3 class="event-title">${event.title}</h3><h3 class="event-title">${event.activity}</h3>
                     </div>
                     <div class="event-time">
                         <span class="event-time">${event.time}</span>
@@ -256,6 +274,7 @@ addEventSubmit.addEventListener("click", () => {
     const eventTitle = addEventTitle.value;
     const eventTimeFrom = addEventFrom.value;
     const eventTimeTo = addEventTo.value;
+    const eventActivity = addEventActivity.value;
     if (eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "") {
         alert("Please fill all the fields");
         return;
@@ -274,6 +293,7 @@ addEventSubmit.addEventListener("click", () => {
     const timeTo = convertTime(eventTimeTo);
     const newEvent = {
         title: eventTitle,
+        activity: eventActivity,
         time: timeFrom + " - " + timeTo,
     };
     let eventAdded = false;
@@ -299,11 +319,13 @@ addEventSubmit.addEventListener("click", () => {
     addEventTitle.value = "";
     addEventFrom.value = "";
     addEventTo.value = "";
+    description.value = "";
     updateEvents(activeDay);
     const activeDayElem = document.querySelector(".day-active");
     if (!(activeDayElem === null || activeDayElem === void 0 ? void 0 : activeDayElem.classList.contains("event"))) {
         activeDayElem === null || activeDayElem === void 0 ? void 0 : activeDayElem.classList.add("event");
     }
+    initCalendar();
 });
 function convertTime(time) {
     let timeArr = time.split(":");

@@ -29,8 +29,6 @@ const months: string[] = [
     "December"
 ]
 
-
-
 //default events array
 /* const eventsArr = [
 {
@@ -117,7 +115,6 @@ function initCalendar() {
             }
         });
 
-
         // if day is today add class today
         if (
             i === new Date().getDate() &&
@@ -200,13 +197,26 @@ const addEventCloseBtn = document.querySelector(".close") as HTMLElement
 const addEventTitle= document.querySelector(".event-name") as HTMLFormElement
 const addEventFrom = document.querySelector(".event-time-from") as HTMLFormElement
 const addEventTo = document.querySelector(".event-time-to") as HTMLFormElement
+const description = document.querySelector(".description") as HTMLFormElement
+const addEventActivity = document.querySelector(".event-select") as HTMLFormElement
 
 addEventBtn.addEventListener("click", () => {
-    addEventContainer?.classList.toggle("active");
+    addEventContainer.classList.toggle("active");
+    //clear the fields
+    // faltaria predefinir una fecha..del día
+    addEventTitle.value = "";
+    addEventFrom.value = "";
+    addEventTo.value = "";
+    description.value = "";
 });
 
 addEventCloseBtn.addEventListener("click", () => {
     addEventContainer?.classList.remove("active");
+    //clear the fields
+    addEventTitle.value = "";
+    addEventFrom.value = "";
+    addEventTo.value = "";
+    description.value = "";
 });
 
 // closes if click outside
@@ -220,12 +230,22 @@ document.addEventListener("click", (e) => {
         target !== addEventContainer
     ) {
         addEventContainer.classList.remove("active");
+        //clear the fields
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
+        description.value = "";
     }
 });
 
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
         addEventContainer.classList.remove("active");
+        //clear the fields
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
+        description.value = "";
     }
 });
 
@@ -355,7 +375,7 @@ function updateEvents(date:any){
                 <div class="event">
                     <div class="title">
                         <i class="fas fa-circle"></i>
-                        <h3 class="event-title">${event.title}</h3>
+                        <h3 class="event-title">${event.title}</h3><h3 class="event-title">${event.activity}</h3>
                     </div>
                     <div class="event-time">
                         <span class="event-time">${event.time}</span>
@@ -377,7 +397,6 @@ function updateEvents(date:any){
     eventsContainer.innerHTML = events;
     //save events when update event called
     saveEvents();
-
 }
 
 const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
@@ -431,6 +450,8 @@ addEventSubmit.addEventListener("click", () => {
     const eventTitle = addEventTitle.value;
     const eventTimeFrom = addEventFrom.value;
     const eventTimeTo = addEventTo.value;
+    // crear const Activity
+    const eventActivity = addEventActivity.value;
 
     //Some validations
     if(eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "")
@@ -457,8 +478,10 @@ addEventSubmit.addEventListener("click", () => {
     const timeFrom = convertTime(eventTimeFrom);
     const timeTo = convertTime(eventTimeTo);  
 
+    // create elements field [obj]
     const newEvent = {
         title: eventTitle,
+        activity: eventActivity,
         time: timeFrom + " - " + timeTo,
     };
 
@@ -497,6 +520,7 @@ addEventSubmit.addEventListener("click", () => {
     addEventTitle.value = "";
     addEventFrom.value = "";
     addEventTo.value = "";
+    description.value = "";
 
     //show current added event
 
@@ -508,8 +532,7 @@ addEventSubmit.addEventListener("click", () => {
     if(!activeDayElem?.classList.contains("event")){
         activeDayElem?.classList.add("event");
     }
-
-
+    initCalendar();
 });
 
  function convertTime(time:any){
