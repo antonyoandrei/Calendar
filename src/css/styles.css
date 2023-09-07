@@ -925,6 +925,62 @@ body.dark-mode {
     color: var(--white-clr);
 }
 
+.dark-mode .event-select option {
+    background-color: var(--background-calendar-before-clr);
+}
+
+.dark-mode .event-select {
+    border: 1px solid var(--background-calendar-before-clr);
+}
+
+.dark-mode .event-select:focus {
+    outline: none;
+}
+
+.dark-mode .event-select::-webkit-scrollbar {
+    width: 0.4rem;
+}
+
+.dark-mode .event-select::-webkit-scrollbar-track {
+    background: var(--background-calendar-before-clr);
+    border-radius: 3.125rem;
+}
+
+.dark-mode .event-select::-webkit-scrollbar-thumb {
+    background: var(--primary-clr);
+    border-radius: 3.125rem;
+}
+
+.event-select option {
+    background-color: var(--background-container-light-clr);
+}
+
+.event-select {
+    appearance: none;
+    width: 100%;
+    padding: 0.2rem;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid var(--background-before-light-clr);
+    font-size: var(--fs-2);
+}
+
+.event-select:focus {
+    outline: none;
+}
+
+.dark-mode option:checked,
+  .dark-mode option:hover {
+    color: var(--primary-clr);
+        box-shadow: 0 0 10px 100px var(--background-calendar-ba-clr) inset;
+  }
+
+option:checked,
+  option:hover {
+    color: var(--primary-light-clr);
+    box-shadow: 0 0 10px 100px var(--background-before-light-clr) inset;
+  }
+
 @media screen and (max-width: 1000px) {
     body {
       align-items: flex-start;

@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content=“Calendar”/>
-    <meta name="keywords" content=“HTML,CSS,TS,JS,BOOTSTRAP”/>
-    <meta name="author" content="Hamilton Squad"/>
+    <meta name="description" content=“Calendar” />
+    <meta name="keywords" content=“HTML,CSS,TS,JS,BOOTSTRAP” />
+    <meta name="author" content="Hamilton Squad" />
     <title>Calendar</title>
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script type="module" src="../dist/main.js"></script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body class="light-mode">
-    
+
     <div class="container">
         <div class="left">
             <div class="calendar">
@@ -33,7 +37,7 @@
                     <div>sat</div>
                     <div>sun</div>
                 </div>
-                <div class="days"> 
+                <div class="days">
                     <!-- DAYS -->
                 </div>
                 <div class="input-container">
@@ -49,7 +53,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="right">
             <div class="today-date">
                 <div class="event-day">Day</div>
@@ -68,13 +72,26 @@
                         <input type="text" placeholder="Title" class="event-name">
                     </div>
                     <div class="add-event-input">
+                        <select onfocus="this.size=3;" onblur="this.size=0;" onchange="this.size=1; this.blur()" class="event-select" id="event-select" name="events">
+                            <option value="">Activity</option>
+                            <option value="chest">Chest</option>
+                            <option value="arms">Arms</option>
+                            <option value="forearms">Forearms</option>
+                            <option value="legs">Legs</option>
+                            <option value="back">Back</option>
+                            <option value="abs">Abs</option>
+                            <option value="cardio">Cardio</option>
+                        </select>
+                    </div>
+                    <div class="add-event-input">
                         <input type="datetime-local" class="event-time-from">
                     </div>
                     <div class="add-event-input">
                         <input type="datetime-local" class="event-time-to">
                     </div>
                     <div class="add-event-input">
-                        <textarea id="textbox" rows="5" cols="50" placeholder="Description" class="description textbox"></textarea>
+                        <textarea id="textbox" rows="5" cols="50" placeholder="Description"
+                            class="description textbox"></textarea>
                     </div>
                 </div>
                 <div class="add-event-footer">
@@ -96,12 +113,13 @@
             </div>
             <div class="credits">
                 <a href="https://github.com/antonyoandrei" class="credit" target="_blank"> Antonyo Andrei</href>
-                <a href="https://github.com/MiguelMayans" class="credit" target="_blank"> Miguel Mayans </a>
-                <a href="https://github.com/ferrancipres" class="credit" target="_blank"> Ferrán Ciprés</a>
-                <a href="https://github.com/ivanlomoro" class="credit" target="_blank"> Iván Martín Lomoro</a>
+                    <a href="https://github.com/MiguelMayans" class="credit" target="_blank"> Miguel Mayans </a>
+                    <a href="https://github.com/ferrancipres" class="credit" target="_blank"> Ferrán Ciprés</a>
+                    <a href="https://github.com/ivanlomoro" class="credit" target="_blank"> Iván Martín Lomoro</a>
             </div>
         </div>
     </footer>
 
 </body>
+
 </html>
