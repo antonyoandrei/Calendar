@@ -110,14 +110,20 @@ const addEventCloseBtn = document.querySelector(".close");
 const addEventTitle = document.querySelector(".event-name");
 const addEventFrom = document.querySelector(".event-time-from");
 const addEventTo = document.querySelector(".event-time-to");
+const description = document.querySelector(".description");
 addEventBtn.addEventListener("click", () => {
-    addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.toggle("active");
+    addEventContainer.classList.toggle("active");
+    addEventTitle.value = "";
+    addEventFrom.innerHTML = "";
+    addEventTo.value = "";
+    description.value = "";
 });
 addEventCloseBtn.addEventListener("click", () => {
     addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.remove("active");
     addEventTitle.value = "";
     addEventFrom.value = "";
     addEventTo.value = "";
+    description.value = "";
 });
 document.addEventListener("click", (e) => {
     const target = e.target;
@@ -128,6 +134,7 @@ document.addEventListener("click", (e) => {
         addEventTitle.value = "";
         addEventFrom.value = "";
         addEventTo.value = "";
+        description.value = "";
     }
 });
 document.addEventListener("keydown", (e) => {
@@ -136,6 +143,7 @@ document.addEventListener("keydown", (e) => {
         addEventTitle.value = "";
         addEventFrom.value = "";
         addEventTo.value = "";
+        description.value = "";
     }
 });
 addEventTitle.addEventListener("input", (e) => {
@@ -308,11 +316,13 @@ addEventSubmit.addEventListener("click", () => {
     addEventTitle.value = "";
     addEventFrom.value = "";
     addEventTo.value = "";
+    description.value = "";
     updateEvents(activeDay);
     const activeDayElem = document.querySelector(".day-active");
     if (!(activeDayElem === null || activeDayElem === void 0 ? void 0 : activeDayElem.classList.contains("event"))) {
         activeDayElem === null || activeDayElem === void 0 ? void 0 : activeDayElem.classList.add("event");
     }
+    initCalendar();
 });
 function convertTime(time) {
     let timeArr = time.split(":");

@@ -197,10 +197,16 @@ const addEventCloseBtn = document.querySelector(".close") as HTMLElement
 const addEventTitle= document.querySelector(".event-name") as HTMLFormElement
 const addEventFrom = document.querySelector(".event-time-from") as HTMLFormElement
 const addEventTo = document.querySelector(".event-time-to") as HTMLFormElement
+const description = document.querySelector(".description") as HTMLFormElement
 
 addEventBtn.addEventListener("click", () => {
-    addEventContainer?.classList.toggle("active");
-    // Update events
+    addEventContainer.classList.toggle("active");
+    //clear the fields
+    // faltaria predefinir una fecha..del día
+    addEventTitle.value = "";
+    addEventFrom.innerHTML = "";
+    addEventTo.value = "";
+    description.value = "";
 });
 
 addEventCloseBtn.addEventListener("click", () => {
@@ -209,6 +215,7 @@ addEventCloseBtn.addEventListener("click", () => {
     addEventTitle.value = "";
     addEventFrom.value = "";
     addEventTo.value = "";
+    description.value = "";
 });
 
 // closes if click outside
@@ -226,6 +233,7 @@ document.addEventListener("click", (e) => {
         addEventTitle.value = "";
         addEventFrom.value = "";
         addEventTo.value = "";
+        description.value = "";
     }
 });
 
@@ -236,6 +244,7 @@ document.addEventListener("keydown", (e) => {
         addEventTitle.value = "";
         addEventFrom.value = "";
         addEventTo.value = "";
+        description.value = "";
     }
 });
 
@@ -507,6 +516,7 @@ addEventSubmit.addEventListener("click", () => {
     addEventTitle.value = "";
     addEventFrom.value = "";
     addEventTo.value = "";
+    description.value = "";
 
     //show current added event
 
@@ -518,8 +528,7 @@ addEventSubmit.addEventListener("click", () => {
     if(!activeDayElem?.classList.contains("event")){
         activeDayElem?.classList.add("event");
     }
-
-
+    initCalendar();
 });
 
  function convertTime(time:any){
