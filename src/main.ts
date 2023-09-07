@@ -241,7 +241,7 @@ document.addEventListener("keydown", (e) => {
 
 //allow only 50 chars in tittle
 addEventTitle.addEventListener("input",(e) =>{
-    addEventTitle.value = addEventTitle.value.slice(0, 50);
+    addEventTitle.value = addEventTitle.value.slice(0, 60);
 });
 
 /* 
@@ -589,7 +589,15 @@ function getEvents() {
     eventsArr.push(...parsedEvents);
 }
 
-
+document.addEventListener('DOMContentLoaded', () => {
+    const textbox = document.getElementById('textbox') as HTMLTextAreaElement;
+    
+    textbox.addEventListener('input', () => {
+      if (textbox.value.length > 500) {
+        textbox.value = textbox.value.slice(0, 500);
+      }
+    });
+});
 
 
 
