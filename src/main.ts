@@ -204,7 +204,7 @@ addEventBtn.addEventListener("click", () => {
     //clear the fields
     // faltaria predefinir una fecha..del día
     addEventTitle.value = "";
-    addEventFrom.innerHTML = "";
+    addEventFrom.value = "";
     addEventTo.value = "";
     description.value = "";
 });
@@ -396,7 +396,6 @@ function updateEvents(date:any){
     eventsContainer.innerHTML = events;
     //save events when update event called
     saveEvents();
-
 }
 
 const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
@@ -476,6 +475,7 @@ addEventSubmit.addEventListener("click", () => {
     const timeFrom = convertTime(eventTimeFrom);
     const timeTo = convertTime(eventTimeTo);  
 
+    // create elements field [obj]
     const newEvent = {
         title: eventTitle,
         time: timeFrom + " - " + timeTo,

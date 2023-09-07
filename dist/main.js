@@ -114,7 +114,7 @@ const description = document.querySelector(".description");
 addEventBtn.addEventListener("click", () => {
     addEventContainer.classList.toggle("active");
     addEventTitle.value = "";
-    addEventFrom.innerHTML = "";
+    addEventFrom.value = "";
     addEventTo.value = "";
     description.value = "";
 });
@@ -207,7 +207,7 @@ function updateEvents(date) {
                 <div class="event">
                     <div class="title">
                         <i class="fas fa-circle"></i>
-                        <h3 class="event-title">${event.title}</h3>
+                        <h3 class="event-title">${event.title}</h3><h3 class="event-title"> ${event.title}</h3>
                     </div>
                     <div class="event-time">
                         <span class="event-time">${event.time}</span>
