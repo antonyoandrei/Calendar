@@ -130,7 +130,7 @@ document.addEventListener("keydown", (e) => {
     }
 });
 addEventTitle.addEventListener("input", (e) => {
-    addEventTitle.value = addEventTitle.value.slice(0, 50);
+    addEventTitle.value = addEventTitle.value.slice(0, 60);
 });
 function addListner() {
     const days = document.querySelectorAll(".day");
@@ -350,3 +350,11 @@ function getEvents() {
     const parsedEvents = JSON.parse(storedEvents);
     eventsArr.push(...parsedEvents);
 }
+document.addEventListener('DOMContentLoaded', () => {
+    const textbox = document.getElementById('textbox');
+    textbox.addEventListener('input', () => {
+        if (textbox.value.length > 500) {
+            textbox.value = textbox.value.slice(0, 500);
+        }
+    });
+});
