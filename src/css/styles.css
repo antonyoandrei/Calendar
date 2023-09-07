@@ -413,7 +413,7 @@ body {
 }
 
 .add-event-wrapper.active {
-    max-height: 400px;
+    max-height: 600px;
 }
 
 .add-event-header {
@@ -964,6 +964,7 @@ body.dark-mode {
     border-radius: 10px;
     border: 1px solid var(--background-before-light-clr);
     font-size: var(--fs-2);
+    cursor: pointer;
 }
 
 .event-select:focus {
@@ -980,6 +981,42 @@ option:checked,
   option:hover {
     color: var(--primary-light-clr);
     box-shadow: 0 0 10px 100px var(--background-before-light-clr) inset;
+}
+
+.checkbox-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.event-checkbox {
+    appearance: none;
+    border-radius: 25%;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    border: 1px solid var(--background-calendar-before-clr);
+    transition: background-color 0.2s ease-in;
+}
+
+.event-checkbox:focus {
+    outline: none;
+}
+
+.event-checkbox:checked {
+    background-color: var(--primary-light-clr);
+    border: 1px solid var(--primary-light-clr);
+    transition: background-color 0.2s ease-in;
+}
+
+.dark-mode .event-checkbox {
+    border: 1px solid var(--background-calendar-before-clr);
+}
+
+.dark-mode .event-checkbox:checked {
+    background-color: var(--primary-clr);
+    border: 1px solid var(--primary-clr);
+    transition: background-color 0.2s ease-in;
 }
 
 @media screen and (max-width: 1000px) {

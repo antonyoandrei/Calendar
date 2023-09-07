@@ -612,5 +612,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+const checkboxFrom = document.getElementById("checkboxTo") as HTMLFormElement;
+const checkboxReminder = document.getElementById("checkboxReminder") as HTMLFormElement;
+const reminderSelect = document.getElementById("reminderSelect") as HTMLFormElement;
 
+checkboxFrom.addEventListener("change", function() {
+    if (checkboxFrom.checked === true) {
+      addEventTo.classList.remove("hidden");
+    } else {
+      addEventTo.classList.add("hidden");
+      addEventTo.classList.add("opacity-1");
+    }
+});
 
+checkboxReminder.addEventListener("change", function() {
+    if (checkboxReminder.checked === true) {
+      reminderSelect.classList.remove("hidden");
+    } else {
+      reminderSelect.classList.add("hidden");
+      reminderSelect.classList.add("opacity-1");
+    }
+});
