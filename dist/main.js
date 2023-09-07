@@ -389,7 +389,6 @@ checkboxFrom.addEventListener("change", function () {
     }
     else {
         addEventTo.classList.add("hidden");
-        addEventTo.classList.add("opacity-1");
     }
 });
 checkboxReminder.addEventListener("change", function () {
@@ -398,6 +397,5 @@ checkboxReminder.addEventListener("change", function () {
     }
     else {
         reminderSelect.classList.add("hidden");
-        reminderSelect.classList.add("opacity-1");
     }
 });

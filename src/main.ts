@@ -621,7 +621,6 @@ checkboxFrom.addEventListener("change", function() {
       addEventTo.classList.remove("hidden");
     } else {
       addEventTo.classList.add("hidden");
-      addEventTo.classList.add("opacity-1");
     }
 });
 
@@ -630,6 +629,5 @@ checkboxReminder.addEventListener("change", function() {
       reminderSelect.classList.remove("hidden");
     } else {
       reminderSelect.classList.add("hidden");
-      reminderSelect.classList.add("opacity-1");
     }
 });
