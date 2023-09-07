@@ -111,6 +111,7 @@ const addEventTitle = document.querySelector(".event-name");
 const addEventFrom = document.querySelector(".event-time-from");
 const addEventTo = document.querySelector(".event-time-to");
 const description = document.querySelector(".description");
+const addEventActivity = document.querySelector(".event-select");
 addEventBtn.addEventListener("click", () => {
     addEventContainer.classList.toggle("active");
     addEventTitle.value = "";
@@ -207,7 +208,7 @@ function updateEvents(date) {
                 <div class="event">
                     <div class="title">
                         <i class="fas fa-circle"></i>
-                        <h3 class="event-title">${event.title}</h3><h3 class="event-title"> ${event.title}</h3>
+                        <h3 class="event-title">${event.title}</h3><h3 class="event-title">${event.activity}</h3>
                     </div>
                     <div class="event-time">
                         <span class="event-time">${event.time}</span>
@@ -273,6 +274,7 @@ addEventSubmit.addEventListener("click", () => {
     const eventTitle = addEventTitle.value;
     const eventTimeFrom = addEventFrom.value;
     const eventTimeTo = addEventTo.value;
+    const eventActivity = addEventActivity.value;
     if (eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "") {
         alert("Please fill all the fields");
         return;
@@ -291,6 +293,7 @@ addEventSubmit.addEventListener("click", () => {
     const timeTo = convertTime(eventTimeTo);
     const newEvent = {
         title: eventTitle,
+        activity: eventActivity,
         time: timeFrom + " - " + timeTo,
     };
     let eventAdded = false;

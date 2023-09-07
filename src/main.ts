@@ -198,6 +198,7 @@ const addEventTitle= document.querySelector(".event-name") as HTMLFormElement
 const addEventFrom = document.querySelector(".event-time-from") as HTMLFormElement
 const addEventTo = document.querySelector(".event-time-to") as HTMLFormElement
 const description = document.querySelector(".description") as HTMLFormElement
+const addEventActivity = document.querySelector(".event-select") as HTMLFormElement
 
 addEventBtn.addEventListener("click", () => {
     addEventContainer.classList.toggle("active");
@@ -374,7 +375,7 @@ function updateEvents(date:any){
                 <div class="event">
                     <div class="title">
                         <i class="fas fa-circle"></i>
-                        <h3 class="event-title">${event.title}</h3>
+                        <h3 class="event-title">${event.title}</h3><h3 class="event-title">${event.activity}</h3>
                     </div>
                     <div class="event-time">
                         <span class="event-time">${event.time}</span>
@@ -449,6 +450,8 @@ addEventSubmit.addEventListener("click", () => {
     const eventTitle = addEventTitle.value;
     const eventTimeFrom = addEventFrom.value;
     const eventTimeTo = addEventTo.value;
+    // crear const Activity
+    const eventActivity = addEventActivity.value;
 
     //Some validations
     if(eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "")
@@ -478,6 +481,7 @@ addEventSubmit.addEventListener("click", () => {
     // create elements field [obj]
     const newEvent = {
         title: eventTitle,
+        activity: eventActivity,
         time: timeFrom + " - " + timeTo,
     };
 
