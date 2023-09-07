@@ -973,13 +973,13 @@ body.dark-mode {
   .dark-mode option:hover {
     color: var(--primary-clr);
         box-shadow: 0 0 10px 100px var(--background-calendar-ba-clr) inset;
-  }
+}
 
 option:checked,
   option:hover {
     color: var(--primary-light-clr);
     box-shadow: 0 0 10px 100px var(--background-before-light-clr) inset;
-  }
+}
 
 @media screen and (max-width: 1000px) {
     body {
