@@ -9,6 +9,7 @@ const eventDay = document.querySelector(".event-day");
 const eventDate = document.querySelector(".event-date");
 const eventsContainer = document.querySelector(".events");
 const addEventSubmit = document.querySelector(".add-event-btn");
+const addEventFrom = document.querySelector(".event-time-from");
 let today = new Date();
 let activeDay;
 let month = today.getMonth();
@@ -104,25 +105,33 @@ todayBtn.addEventListener("click", () => {
     year = today.getFullYear();
     initCalendar();
 });
+function getActiveDay(date) {
+    const day = new Date(year, month, date);
+    const dayName = day.toString().split(' ')[0];
+    eventDay.innerHTML = dayName;
+    eventDate.innerHTML = date + " " + months[month] + " " + year;
+    const activeDay = new Date(year, month, date);
+    activeDay.setDate(day.getDate() + 1);
+    console.log(activeDay.toISOString().substr(0, 16));
+    console.log(activeDay);
+    addEventFrom.value = activeDay.toISOString().substr(0, 16);
+}
 const addEventBtn = document.querySelector(".add-event");
 const addEventContainer = document.querySelector(".add-event-wrapper");
 const addEventCloseBtn = document.querySelector(".close");
 const addEventTitle = document.querySelector(".event-name");
-const addEventFrom = document.querySelector(".event-time-from");
 const addEventTo = document.querySelector(".event-time-to");
 const description = document.querySelector(".description");
 const addEventActivity = document.querySelector(".event-select");
 addEventBtn.addEventListener("click", () => {
     addEventContainer.classList.toggle("active");
     addEventTitle.value = "";
-    addEventFrom.value = "";
     addEventTo.value = "";
     description.value = "";
 });
 addEventCloseBtn.addEventListener("click", () => {
     addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.remove("active");
     addEventTitle.value = "";
-    addEventFrom.value = "";
     addEventTo.value = "";
     description.value = "";
 });
@@ -133,7 +142,6 @@ document.addEventListener("click", (e) => {
         target !== addEventContainer) {
         addEventContainer.classList.remove("active");
         addEventTitle.value = "";
-        addEventFrom.value = "";
         addEventTo.value = "";
         description.value = "";
     }
@@ -142,7 +150,6 @@ document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
         addEventContainer.classList.remove("active");
         addEventTitle.value = "";
-        addEventFrom.value = "";
         addEventTo.value = "";
         description.value = "";
     }
@@ -190,12 +197,6 @@ function addListner() {
             }
         });
     });
-}
-function getActiveDay(date) {
-    const day = new Date(year, month, date);
-    const dayName = day.toString().split(' ')[0];
-    eventDay.innerHTML = dayName;
-    eventDate.innerHTML = date + " " + months[month] + " " + year;
 }
 function updateEvents(date) {
     let events = "";
