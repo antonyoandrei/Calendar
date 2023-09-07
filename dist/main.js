@@ -77,7 +77,7 @@ function initCalendar() {
         days += `<div class="day next-date">${j}</div>`;
     }
     daysContainer.innerHTML = days;
-    addListner();
+    addListener();
 }
 initCalendar();
 function prevMonth() {
@@ -119,6 +119,16 @@ addEventBtn.addEventListener("click", () => {
     addEventTo.value = "";
     description.value = "";
 });
+const days = document.querySelectorAll(".day");
+days.forEach(day => {
+    day.addEventListener("click", () => {
+        addEventContainer.classList.toggle("active-day-click");
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
+        description.value = "";
+    });
+});
 addEventCloseBtn.addEventListener("click", () => {
     addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.remove("active");
     addEventTitle.value = "";
@@ -150,7 +160,7 @@ document.addEventListener("keydown", (e) => {
 addEventTitle.addEventListener("input", (e) => {
     addEventTitle.value = addEventTitle.value.slice(0, 60);
 });
-function addListner() {
+function addListener() {
     const days = document.querySelectorAll(".day");
     days.forEach((day) => {
         day.addEventListener("click", (e) => {

@@ -152,7 +152,7 @@ function initCalendar() {
     }
     daysContainer.innerHTML = days;
     //add listener after calender initalized
-    addListner();
+    addListener();
 }
 
 initCalendar();
@@ -191,14 +191,14 @@ todayBtn.addEventListener("click", () => {
     initCalendar();
 })
 
-const addEventBtn = document.querySelector(".add-event") as HTMLElement
-const addEventContainer = document.querySelector(".add-event-wrapper") as HTMLElement
-const addEventCloseBtn = document.querySelector(".close") as HTMLElement
-const addEventTitle= document.querySelector(".event-name") as HTMLFormElement
-const addEventFrom = document.querySelector(".event-time-from") as HTMLFormElement
-const addEventTo = document.querySelector(".event-time-to") as HTMLFormElement
-const description = document.querySelector(".description") as HTMLFormElement
-const addEventActivity = document.querySelector(".event-select") as HTMLFormElement
+const addEventBtn = document.querySelector(".add-event") as HTMLElement;
+const addEventContainer = document.querySelector(".add-event-wrapper") as HTMLElement;
+const addEventCloseBtn = document.querySelector(".close") as HTMLElement;
+const addEventTitle= document.querySelector(".event-name") as HTMLFormElement;
+const addEventFrom = document.querySelector(".event-time-from") as HTMLFormElement;
+const addEventTo = document.querySelector(".event-time-to") as HTMLFormElement;
+const description = document.querySelector(".description") as HTMLFormElement;
+const addEventActivity = document.querySelector(".event-select") as HTMLFormElement;
 
 addEventBtn.addEventListener("click", () => {
     addEventContainer.classList.toggle("active");
@@ -208,6 +208,18 @@ addEventBtn.addEventListener("click", () => {
     addEventFrom.value = "";
     addEventTo.value = "";
     description.value = "";
+});
+
+const days = document.querySelectorAll(".day");
+
+days.forEach(day => {
+    day.addEventListener("click", () => {
+        addEventContainer.classList.toggle("active-day-click");
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
+        description.value = "";
+    });
 });
 
 addEventCloseBtn.addEventListener("click", () => {
@@ -286,7 +298,7 @@ addEventTo.addEventListener("input",(e) =>{
 }); */
 
 //lets create function to add listener on days after rendered
-function addListner() {
+function addListener() {
     const days = document.querySelectorAll(".day");
     days.forEach((day) => {
         day.addEventListener("click",(e) => {
