@@ -200,10 +200,15 @@ const addEventTo = document.querySelector(".event-time-to") as HTMLFormElement
 
 addEventBtn.addEventListener("click", () => {
     addEventContainer?.classList.toggle("active");
+    // Update events
 });
 
 addEventCloseBtn.addEventListener("click", () => {
     addEventContainer?.classList.remove("active");
+    //clear the fields
+    addEventTitle.value = "";
+    addEventFrom.value = "";
+    addEventTo.value = "";
 });
 
 // closes if click outside
@@ -217,12 +222,20 @@ document.addEventListener("click", (e) => {
         target !== addEventContainer
     ) {
         addEventContainer.classList.remove("active");
+        //clear the fields
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
     }
 });
 
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
         addEventContainer.classList.remove("active");
+        //clear the fields
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
     }
 });
 

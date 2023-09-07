@@ -115,6 +115,9 @@ addEventBtn.addEventListener("click", () => {
 });
 addEventCloseBtn.addEventListener("click", () => {
     addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.remove("active");
+    addEventTitle.value = "";
+    addEventFrom.value = "";
+    addEventTo.value = "";
 });
 document.addEventListener("click", (e) => {
     const target = e.target;
@@ -122,11 +125,17 @@ document.addEventListener("click", (e) => {
         !(addEventContainer.contains(target)) &&
         target !== addEventContainer) {
         addEventContainer.classList.remove("active");
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
     }
 });
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
         addEventContainer.classList.remove("active");
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
     }
 });
 addEventTitle.addEventListener("input", (e) => {
