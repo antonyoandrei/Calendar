@@ -29,8 +29,6 @@ const months: string[] = [
     "December"
 ]
 
-
-
 //default events array
 /* const eventsArr = [
 {
@@ -117,7 +115,6 @@ function initCalendar() {
             }
         });
 
-
         // if day is today add class today
         if (
             i === new Date().getDate() &&
@@ -200,13 +197,25 @@ const addEventCloseBtn = document.querySelector(".close") as HTMLElement
 const addEventTitle= document.querySelector(".event-name") as HTMLFormElement
 const addEventFrom = document.querySelector(".event-time-from") as HTMLFormElement
 const addEventTo = document.querySelector(".event-time-to") as HTMLFormElement
+const description = document.querySelector(".description") as HTMLFormElement
 
 addEventBtn.addEventListener("click", () => {
-    addEventContainer?.classList.toggle("active");
+    addEventContainer.classList.toggle("active");
+    //clear the fields
+    // faltaria predefinir una fecha..del día
+    addEventTitle.value = "";
+    addEventFrom.innerHTML = "";
+    addEventTo.value = "";
+    description.value = "";
 });
 
 addEventCloseBtn.addEventListener("click", () => {
     addEventContainer?.classList.remove("active");
+    //clear the fields
+    addEventTitle.value = "";
+    addEventFrom.value = "";
+    addEventTo.value = "";
+    description.value = "";
 });
 
 // closes if click outside
@@ -220,12 +229,22 @@ document.addEventListener("click", (e) => {
         target !== addEventContainer
     ) {
         addEventContainer.classList.remove("active");
+        //clear the fields
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
+        description.value = "";
     }
 });
 
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
         addEventContainer.classList.remove("active");
+        //clear the fields
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
+        description.value = "";
     }
 });
 
@@ -497,6 +516,7 @@ addEventSubmit.addEventListener("click", () => {
     addEventTitle.value = "";
     addEventFrom.value = "";
     addEventTo.value = "";
+    description.value = "";
 
     //show current added event
 
@@ -508,8 +528,7 @@ addEventSubmit.addEventListener("click", () => {
     if(!activeDayElem?.classList.contains("event")){
         activeDayElem?.classList.add("event");
     }
-
-
+    initCalendar();
 });
 
  function convertTime(time:any){
