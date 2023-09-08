@@ -120,8 +120,6 @@ const addEventBtn = document.querySelector(".add-event");
 const addEventContainer = document.querySelector(".add-event-wrapper");
 const addEventCloseBtn = document.querySelector(".close");
 const addEventTitle = document.querySelector(".event-name");
-const addEventContainerDay = document.querySelector(".add-event-wrapper-day");
-const addEventCloseBtnDay = document.querySelector(".close-day");
 const addEventTo = document.querySelector(".event-time-to");
 const description = document.querySelector(".description");
 const addEventActivity = document.querySelector(".event-select");
@@ -134,16 +132,15 @@ const openAddEventContainer = () => {
 const closeAddEventContainer = () => {
     addEventContainer.classList.remove("active");
 };
-const openAddEventContainerDay = () => {
-    addEventContainerDay.classList.add("active");
-    addEventTitle.value = "";
-    addEventTo.value = "";
-    description.value = "";
+const toggleAddEventContainer = () => {
+    addEventContainer.classList.toggle("active");
+    if (addEventContainer.classList.contains("active")) {
+        addEventTitle.value = "";
+        addEventTo.value = "";
+        description.value = "";
+    }
 };
-const closeAddEventContainerDay = () => {
-    addEventContainerDay.classList.remove("active");
-};
-addEventBtn.addEventListener("click", openAddEventContainer);
+addEventBtn.addEventListener("click", toggleAddEventContainer);
 addEventCloseBtn.addEventListener("click", closeAddEventContainer);
 document.addEventListener("click", (e) => {
     const target = e.target;
@@ -156,20 +153,12 @@ document.addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
         closeAddEventContainer();
-        closeAddEventContainerDay();
     }
 });
-const days = document.querySelectorAll(".day");
-days.forEach(day => {
-    day.addEventListener("dblclick", openAddEventContainerDay);
-});
-addEventCloseBtnDay.addEventListener("click", closeAddEventContainerDay);
-document.addEventListener("click", (e) => {
-    const target = e.target;
-    if (target !== addEventBtn &&
-        !(addEventContainerDay.contains(target)) &&
-        target !== addEventContainerDay) {
-        closeAddEventContainerDay();
+daysContainer.addEventListener('dblclick', function (event) {
+    const target = event.target;
+    if (target === null || target === void 0 ? void 0 : target.classList.contains('day')) {
+        toggleAddEventContainer();
     }
 });
 addEventTitle.addEventListener("input", (e) => {
@@ -341,7 +330,6 @@ addEventSubmit.addEventListener("click", () => {
         });
     }
     addEventContainer.classList.remove('active');
-    addEventContainerDay.classList.remove('active');
     addEventTitle.value = "";
     addEventFrom.value = "";
     addEventTo.value = "";

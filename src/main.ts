@@ -212,8 +212,6 @@ const addEventBtn = document.querySelector(".add-event") as HTMLElement;
 const addEventContainer = document.querySelector(".add-event-wrapper") as HTMLElement;
 const addEventCloseBtn = document.querySelector(".close") as HTMLElement;
 const addEventTitle = document.querySelector(".event-name") as HTMLFormElement;
-const addEventContainerDay = document.querySelector(".add-event-wrapper-day") as HTMLElement;
-const addEventCloseBtnDay = document.querySelector(".close-day") as HTMLElement;
 const addEventTo = document.querySelector(".event-time-to") as HTMLFormElement;
 const description = document.querySelector(".description") as HTMLFormElement;
 const addEventActivity = document.querySelector(".event-select") as HTMLFormElement;
@@ -229,18 +227,16 @@ const closeAddEventContainer = () => {
     addEventContainer.classList.remove("active");
 };
 
-const openAddEventContainerDay = () => {
-    addEventContainerDay.classList.add("active");
-    addEventTitle.value = "";
-    addEventTo.value = "";
-    description.value = "";
+const toggleAddEventContainer = () => {
+    addEventContainer.classList.toggle("active");
+    if (addEventContainer.classList.contains("active")) {
+        addEventTitle.value = "";
+        addEventTo.value = "";
+        description.value = "";
+    }
 };
 
-const closeAddEventContainerDay = () => {
-    addEventContainerDay.classList.remove("active");
-};
-
-addEventBtn.addEventListener("click", openAddEventContainer);
+addEventBtn.addEventListener("click", toggleAddEventContainer);
 
 addEventCloseBtn.addEventListener("click", closeAddEventContainer);
 
@@ -259,27 +255,13 @@ document.addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
         closeAddEventContainer();
-        closeAddEventContainerDay();
     }
 });
 
-const days = document.querySelectorAll(".day");
-
-days.forEach(day => {
-    day.addEventListener("dblclick", openAddEventContainerDay);
-});
-
-addEventCloseBtnDay.addEventListener("click", closeAddEventContainerDay);
-
-document.addEventListener("click", (e) => {
-    const target = e.target as HTMLElement;
-
-    if (
-        target !== addEventBtn &&
-        !(addEventContainerDay.contains(target)) &&
-        target !== addEventContainerDay
-    ) {
-        closeAddEventContainerDay();
+daysContainer.addEventListener('dblclick', function(event) {
+    const target = event.target as HTMLElement;
+    if (target?.classList.contains('day')) {
+        toggleAddEventContainer();
     }
 });
 
@@ -556,7 +538,6 @@ addEventSubmit.addEventListener("click", () => {
 
     //remove active from add event form
     addEventContainer.classList.remove('active')
-    addEventContainerDay.classList.remove('active')
     //clear the fields
     addEventTitle.value = "";
     addEventFrom.value = "";
