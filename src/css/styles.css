@@ -6,6 +6,7 @@
     --white-clr: #ffffff;
     --black-clr: #000000;
     --grey-clr: #333435;
+    --red-clr: #ff0000;
     --background-wm-clr: #e0e0e0;
     --background-dm-clr: #000000;
     --background-container-clr: #111316;
@@ -1119,8 +1120,12 @@ option:checked,
     background-image: url('/assets/img/plus-dark.png');
 }
 
+.day:hover::after {
+    opacity: 1;
+}
+
 .validation-message {
-    color: red;
+    color: var(--red-clr);
     opacity: 0;
     transition: opacity 0.5s;
 }
