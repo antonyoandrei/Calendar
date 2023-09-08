@@ -1,4 +1,3 @@
-"use strict";
 const calendar = document.querySelector(".calendar");
 const date = document.querySelector(".date");
 const daysContainer = document.querySelector(".days");
@@ -15,18 +14,8 @@ let activeDay;
 let month = today.getMonth();
 let year = today.getFullYear();
 const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
+    "January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"
 ];
 let eventsArr = [];
 getEvents();
@@ -57,7 +46,6 @@ function initCalendar() {
             month === new Date().getMonth()) {
             activeDay = i;
             getActiveDay(i);
-            updateEvents(i);
             if (event) {
                 days += `<div class="day today active event">${i}</div>`;
             }
@@ -112,8 +100,6 @@ function getActiveDay(date) {
     eventDate.innerHTML = date + " " + months[month] + " " + year;
     const activeDay = new Date(year, month, date);
     activeDay.setDate(day.getDate() + 1);
-    console.log(activeDay.toISOString().substr(0, 16));
-    console.log(activeDay);
     addEventFrom.value = activeDay.toISOString().substr(0, 16);
 }
 const addEventBtn = document.querySelector(".add-event");
@@ -205,6 +191,7 @@ function addListener() {
         });
     });
 }
+initCalendar();
 function updateEvents(date) {
     let events = "";
     eventsArr.forEach((event) => {
@@ -245,7 +232,6 @@ if (!link) {
 else {
     link.href = '/assets/img/icon.png';
 }
-;
 let theme = "light-mode";
 function toggleTheme() {
     const calendar = document.querySelector("body");
@@ -295,11 +281,8 @@ addEventSubmit.addEventListener("click", () => {
     }
     const timeFromArr = eventTimeFrom.split(":");
     const timeToArr = eventTimeTo.split(":");
-    if (timeFromArr.length != 2 ||
-        timeFromArr[0] > 23 ||
-        timeFromArr[1] > 59) {
-        alert("Invalid time format");
-    }
+    const timeFromHour = parseInt(timeFromArr[0], 10);
+    const timeFromMin = parseInt(timeFromArr[1], 10);
     const timeFrom = convertTime(eventTimeFrom);
     const timeTo = convertTime(eventTimeTo);
     const newEvent = {
@@ -343,13 +326,12 @@ addEventSubmit.addEventListener("click", () => {
     initCalendar();
 });
 function convertTime(time) {
-    let timeArr = time.split(":");
-    let timeHour = timeArr[0];
-    let timeMin = timeArr[1];
-    let timeFormat = timeHour >= 12 ? "PM" : "AM";
-    timeHour = timeHour % 12 || 12;
-    time = timeHour + ":" + timeMin + " " + timeFormat;
-    return time;
+    const [hours, minutes] = time.split(":").map(Number);
+    const timeFormat = hours >= 12 ? "PM" : "AM";
+    let formattedHours = hours % 12;
+    formattedHours = formattedHours === 0 ? 12 : formattedHours;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    return `${formattedHours}:${formattedMinutes} ${timeFormat}`;
 }
 eventsContainer.addEventListener("click", (e) => {
     const target = e.target;
@@ -377,15 +359,13 @@ eventsContainer.addEventListener("click", (e) => {
     }
 });
 function saveEvents() {
-    localStorage.setItem("events", JSON.stringify(eventsArr));
+    localStorage.setItem("eventsArr", JSON.stringify(eventsArr));
 }
 function getEvents() {
-    const storedEvents = localStorage.getItem("events");
-    if (storedEvents === null) {
-        return;
+    if (localStorage.getItem("eventsArr")) {
+        eventsArr = JSON.parse(localStorage.getItem("eventsArr") || "[]");
+        updateEvents(activeDay);
     }
-    const parsedEvents = JSON.parse(storedEvents);
-    eventsArr.push(...parsedEvents);
 }
 document.addEventListener('DOMContentLoaded', () => {
     const textbox = document.getElementById('textbox');
@@ -414,3 +394,4 @@ checkboxReminder.addEventListener("change", function () {
         reminderSelect.classList.add("hidden");
     }
 });
+export {};
