@@ -85,6 +85,7 @@ function initCalendar() {
     }
     daysContainer.innerHTML = days;
     addListener();
+    updateEvents(activeDay);
 }
 
 initCalendar();
@@ -337,11 +338,6 @@ addEventSubmit.addEventListener("click", () => {
     const eventTimeTo = addEventTo.value;
     const eventActivity = addEventActivity.value;
 
-    if (eventTitle === "" || eventTimeFrom === "") {
-        alert("Please fill all the fields");
-        return;
-    }
-
     const timeFromArr = eventTimeFrom.split(":");
     const timeToArr = eventTimeTo.split(":");
     const timeFromHour = parseInt(timeFromArr[0], 10);
@@ -468,16 +464,58 @@ const reminderSelect = document.getElementById("reminderSelect") as HTMLFormElem
 
 checkboxFrom.addEventListener("change", function () {
     if (checkboxFrom.checked === true) {
-        addEventTo.classList.remove("hidden");
+        addEventTo.classList.remove("hidden-input");
+        addEventTo.classList.add("shown-input");
     } else {
-        addEventTo.classList.add("hidden");
+        addEventTo.classList.remove("shown-input");
+        addEventTo.classList.add("hidden-input");
     }
 });
 
 checkboxReminder.addEventListener("change", function () {
     if (checkboxReminder.checked === true) {
-        reminderSelect.classList.remove("hidden");
+        reminderSelect.classList.remove("hidden-input");
+        reminderSelect.classList.add("shown-input");
     } else {
-        reminderSelect.classList.add("hidden");
+        reminderSelect.classList.remove("shown-input");
+        reminderSelect.classList.add("hidden-input");
     }
 });
+
+const titleValidationMessage = document.querySelector(".event-name + .validation-message") as HTMLElement;
+const activityValidationMessage = document.querySelector(".event-select + .validation-message") as HTMLElement;
+const validationTitle = document.querySelector(".validation-title") as HTMLElement;
+const validationActivity = document.querySelector(".validation-activity") as HTMLElement;
+
+addEventTitle.addEventListener("blur", validateTitle);
+addEventTitle.addEventListener("focus", clearValidationMessage);
+addEventActivity.addEventListener("blur", validateActivity);
+addEventActivity.addEventListener("focus", clearValidationMessage);
+
+function validateTitle() {
+    const eventTitle = addEventTitle.value.trim();
+    if (eventTitle === "") {
+        titleValidationMessage.textContent = "Please enter a title.";
+        addEventTitle.classList.add("error");
+        validationTitle.classList.add("error-animation")
+    } else {
+        titleValidationMessage.textContent = "";
+        addEventTitle.classList.remove("error");
+    }
+}
+function validateActivity() {
+    const eventActivity = addEventActivity.value;
+    if (eventActivity === "") {
+        activityValidationMessage.textContent = "Please select an activity.";
+        addEventActivity.classList.add("error");
+        validationActivity.classList.add("error-animation")
+    } else {
+        activityValidationMessage.textContent = "";
+        addEventActivity.classList.remove("error");
+    }
+}
+
+function clearValidationMessage() {
+    addEventTitle.textContent = "";
+    addEventTitle.classList.remove("error");
+}

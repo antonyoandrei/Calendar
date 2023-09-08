@@ -78,6 +78,7 @@
                 <div class="add-event-body">
                     <div class="add-event-input">
                         <input type="text" placeholder="Title" class="event-name">
+                        <div class="validation-message validation-title"></div>
                     </div>
                     <div class="add-event-input">
                         <select onfocus="this.size=3;" onblur="this.size=0;" onchange="this.size=1; this.blur()" class="event-select" id="eventSelect" name="events">
@@ -90,6 +91,7 @@
                             <option value="Abs">Abs</option>
                             <option value="Cardio">Cardio</option>
                         </select>
+                        <div class="validation-message validation-activity"></div>
                     </div>
                     <div class="add-event-input">
                         <input type="datetime-local" class="event-time-from">
@@ -99,20 +101,20 @@
                         <label for="checkbox"> End date</label >
                     </div>
                     <div class="add-event-input">
-                        <input type="datetime-local" class="event-time-to hidden">
+                        <input type="datetime-local" class="event-time-to hidden-input">
                     </div>
                     <div class="checkbox-container">
                         <input type="checkbox" class="event-checkbox" id="checkboxReminder">
                         <label for="checkbox" > Add a reminder</label >
                     </div>
                     <div class="add-event-input">
-                        <select onfocus="this.size=3;" onblur="this.size=0;" onchange="this.size=1; this.blur()" class=" reminder-select event-select hidden" id="reminderSelect" name="reminder">
+                        <select onfocus="this.size=3;" onblur="this.size=0;" onchange="this.size=1; this.blur()" class=" reminder-select event-select hidden-input" id="reminderSelect" name="reminder">
                             <option value="">Time</option>
-                            <option value="5">5 minutes</option>
-                            <option value="10">10 minutes</option>
-                            <option value="15">15 minutes</option>
-                            <option value="30 ">30 minutes</option>
-                            <option value="60">1 hour</option>
+                            <option value=5>5 minutes</option>
+                            <option value=10>10 minutes</option>
+                            <option value=15>15 minutes</option>
+                            <option value=30>30 minutes</option>
+                            <option value=60>1 hour</option>
                         </select>
                     </div>
                     <div class="add-event-input">
