@@ -120,50 +120,56 @@ const addEventBtn = document.querySelector(".add-event");
 const addEventContainer = document.querySelector(".add-event-wrapper");
 const addEventCloseBtn = document.querySelector(".close");
 const addEventTitle = document.querySelector(".event-name");
+const addEventContainerDay = document.querySelector(".add-event-wrapper-day");
+const addEventCloseBtnDay = document.querySelector(".close-day");
 const addEventTo = document.querySelector(".event-time-to");
 const description = document.querySelector(".description");
 const addEventActivity = document.querySelector(".event-select");
-addEventBtn.addEventListener("click", () => {
-    addEventContainer.classList.toggle("active");
-    addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.remove("active-day-click");
+const openAddEventContainer = () => {
+    addEventContainer.classList.add("active");
     addEventTitle.value = "";
     addEventTo.value = "";
     description.value = "";
-});
-const days = document.querySelectorAll(".day");
-days.forEach(day => {
-    day.addEventListener("click", () => {
-        addEventContainer.classList.toggle("active-day-click");
-        addEventTitle.value = "";
-        addEventTo.value = "";
-        description.value = "";
-    });
-});
-addEventCloseBtn.addEventListener("click", () => {
-    addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.remove("active");
-    addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.remove("active-day-click");
+};
+const closeAddEventContainer = () => {
+    addEventContainer.classList.remove("active");
+};
+const openAddEventContainerDay = () => {
+    addEventContainerDay.classList.add("active");
     addEventTitle.value = "";
     addEventTo.value = "";
     description.value = "";
-});
+};
+const closeAddEventContainerDay = () => {
+    addEventContainerDay.classList.remove("active");
+};
+addEventBtn.addEventListener("click", openAddEventContainer);
+addEventCloseBtn.addEventListener("click", closeAddEventContainer);
 document.addEventListener("click", (e) => {
     const target = e.target;
     if (target !== addEventBtn &&
         !(addEventContainer.contains(target)) &&
         target !== addEventContainer) {
-        addEventContainer.classList.remove("active");
-        addEventTitle.value = "";
-        addEventTo.value = "";
-        description.value = "";
+        closeAddEventContainer();
     }
 });
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
-        addEventContainer.classList.remove("active");
-        addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.remove("active-day-click");
-        addEventTitle.value = "";
-        addEventTo.value = "";
-        description.value = "";
+        closeAddEventContainer();
+        closeAddEventContainerDay();
+    }
+});
+const days = document.querySelectorAll(".day");
+days.forEach(day => {
+    day.addEventListener("dblclick", openAddEventContainerDay);
+});
+addEventCloseBtnDay.addEventListener("click", closeAddEventContainerDay);
+document.addEventListener("click", (e) => {
+    const target = e.target;
+    if (target !== addEventBtn &&
+        !(addEventContainerDay.contains(target)) &&
+        target !== addEventContainerDay) {
+        closeAddEventContainerDay();
     }
 });
 addEventTitle.addEventListener("input", (e) => {
@@ -335,6 +341,7 @@ addEventSubmit.addEventListener("click", () => {
         });
     }
     addEventContainer.classList.remove('active');
+    addEventContainerDay.classList.remove('active');
     addEventTitle.value = "";
     addEventFrom.value = "";
     addEventTo.value = "";

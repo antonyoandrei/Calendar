@@ -208,55 +208,41 @@ function getActiveDay(date: any) {
     addEventFrom.value = activeDay.toISOString().substr(0, 16);
 }
 
-
 const addEventBtn = document.querySelector(".add-event") as HTMLElement;
 const addEventContainer = document.querySelector(".add-event-wrapper") as HTMLElement;
 const addEventCloseBtn = document.querySelector(".close") as HTMLElement;
 const addEventTitle = document.querySelector(".event-name") as HTMLFormElement;
-
+const addEventContainerDay = document.querySelector(".add-event-wrapper-day") as HTMLElement;
+const addEventCloseBtnDay = document.querySelector(".close-day") as HTMLElement;
 const addEventTo = document.querySelector(".event-time-to") as HTMLFormElement;
 const description = document.querySelector(".description") as HTMLFormElement;
 const addEventActivity = document.querySelector(".event-select") as HTMLFormElement;
 
-addEventBtn.addEventListener("click", () => {
-
-    addEventContainer.classList.toggle("active");
-    addEventContainer?.classList.remove("active-day-click");
-    //clear the fields
-    // faltaria predefinir una fecha..del día
+const openAddEventContainer = () => {
+    addEventContainer.classList.add("active");
     addEventTitle.value = "";
-
-    // const today = new Date().toISOString().substr(0, 10)
-    // addEventFrom.value = today;
-    // console.log(today)// 2011-09-29
-
     addEventTo.value = "";
     description.value = "";
-});
+};
 
-const days = document.querySelectorAll(".day");
+const closeAddEventContainer = () => {
+    addEventContainer.classList.remove("active");
+};
 
-days.forEach(day => {
-    day.addEventListener("click", () => {
-        addEventContainer.classList.toggle("active-day-click");
-        addEventTitle.value = "";
-        // addEventFrom.value = "";
-        addEventTo.value = "";
-        description.value = "";
-    });
-});
-
-addEventCloseBtn.addEventListener("click", () => {
-    addEventContainer?.classList.remove("active");
-    addEventContainer?.classList.remove("active-day-click");
-    //clear the fields
+const openAddEventContainerDay = () => {
+    addEventContainerDay.classList.add("active");
     addEventTitle.value = "";
-    // addEventFrom.value = "";
     addEventTo.value = "";
     description.value = "";
-});
+};
 
-// closes if click outside
+const closeAddEventContainerDay = () => {
+    addEventContainerDay.classList.remove("active");
+};
+
+addEventBtn.addEventListener("click", openAddEventContainer);
+
+addEventCloseBtn.addEventListener("click", closeAddEventContainer);
 
 document.addEventListener("click", (e) => {
     const target = e.target as HTMLElement;
@@ -266,26 +252,37 @@ document.addEventListener("click", (e) => {
         !(addEventContainer.contains(target)) &&
         target !== addEventContainer
     ) {
-        addEventContainer.classList.remove("active");
-        //clear the fields
-        addEventTitle.value = "";
-        // addEventFrom.value = "";
-        addEventTo.value = "";
-        description.value = "";
+        closeAddEventContainer();
     }
 });
 
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
-        addEventContainer.classList.remove("active");
-        addEventContainer?.classList.remove("active-day-click");
-        //clear the fields
-        addEventTitle.value = "";
-        // addEventFrom.value = "";
-        addEventTo.value = "";
-        description.value = "";
+        closeAddEventContainer();
+        closeAddEventContainerDay();
     }
 });
+
+const days = document.querySelectorAll(".day");
+
+days.forEach(day => {
+    day.addEventListener("dblclick", openAddEventContainerDay);
+});
+
+addEventCloseBtnDay.addEventListener("click", closeAddEventContainerDay);
+
+document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+
+    if (
+        target !== addEventBtn &&
+        !(addEventContainerDay.contains(target)) &&
+        target !== addEventContainerDay
+    ) {
+        closeAddEventContainerDay();
+    }
+});
+
 
 //allow only 50 chars in tittle
 addEventTitle.addEventListener("input", (e) => {
@@ -559,6 +556,7 @@ addEventSubmit.addEventListener("click", () => {
 
     //remove active from add event form
     addEventContainer.classList.remove('active')
+    addEventContainerDay.classList.remove('active')
     //clear the fields
     addEventTitle.value = "";
     addEventFrom.value = "";

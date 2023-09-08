@@ -415,11 +415,24 @@ body {
     transition: max-height 1s;
 }
 
+.add-event-wrapper-day {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    width: 90%;
+    max-height: 0;
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: var(--background-ba-light-clr);
+    transform: translateX(-50%);
+    transition: max-height 1s;
+}
+
 .add-event-wrapper.active {
     max-height: 600px;
 }
 
-.add-event-wrapper.active-day-click {
+.add-event-wrapper-day.active {
     max-height: 600px;
 }
 
@@ -441,6 +454,17 @@ body {
 }
 
 .add-event-header .close:hover {
+    color: var(--secondary-light-clr);
+    opacity: 1;
+}
+
+.add-event-header .close-day {
+    font-size: var(--fs-3);
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.add-event-header .close-day:hover {
     color: var(--secondary-light-clr);
     opacity: 1;
 }

@@ -127,10 +127,64 @@
                     <div class="button add-event-btn">Add event</div>
                 </div>
             </div>
+            <div class="add-event-wrapper-day">
+                <div class="add-event-header">
+                    <div class="title">Add Event</div>
+                    <i class="fa fa-times close-day"></i>
+                </div>
+                <div class="add-event-body">
+                    <div class="add-event-input">
+                        <input type="text" placeholder="Title" class="event-name">
+                    </div>
+                    <div class="add-event-input">
+                        <select onfocus="this.size=3;" onblur="this.size=0;" onchange="this.size=1; this.blur()" class="event-select" id="eventSelect" name="events">
+                            <option value="">Activity</option>
+                            <option value="Chest">Chest</option>
+                            <option value="Arms">Arms</option>
+                            <option value="Forearms">Forearms</option>
+                            <option value="Legs">Legs</option>
+                            <option value="Back">Back</option>
+                            <option value="Abs">Abs</option>
+                            <option value="Cardio">Cardio</option>
+                        </select>
+                    </div>
+                    <div class="add-event-input">
+                        <input type="datetime-local" class="event-time-from">
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" class="event-checkbox" id="checkboxTo">
+                        <label for="checkbox"> End date</label >
+                    </div>
+                    <div class="add-event-input">
+                        <input type="datetime-local" class="event-time-to hidden">
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" class="event-checkbox" id="checkboxReminder">
+                        <label for="checkbox" > Add a reminder</label >
+                    </div>
+                    <div class="add-event-input">
+                        <select onfocus="this.size=3;" onblur="this.size=0;" onchange="this.size=1; this.blur()" class=" reminder-select event-select hidden" id="reminderSelect" name="reminder">
+                            <option value="">Time</option>
+                            <option value="5">5 minutes</option>
+                            <option value="10">10 minutes</option>
+                            <option value="15">15 minutes</option>
+                            <option value="30 ">30 minutes</option>
+                            <option value="60">1 hour</option>
+                        </select>
+                    </div>
+                    <div class="add-event-input">
+                        <textarea id="textbox" rows="5" cols="50" placeholder="Description"
+                            class="description textbox"></textarea>
+                    </div>
+                </div>
+                <div class="add-event-footer">
+                    <div class="button add-event-btn">Add event</div>
+                </div>
+            </div>
+            <button class="add-event">
+                <i class="fas fa-plus"></i>
+            </button>
         </div>
-        <button class="add-event">
-            <i class="fas fa-plus"></i>
-        </button>
     </div>
 
     <footer class="footer">
