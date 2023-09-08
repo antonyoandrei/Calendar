@@ -289,18 +289,15 @@ addEventSubmit.addEventListener("click", () => {
     const eventTimeFrom = addEventFrom.value;
     const eventTimeTo = addEventTo.value;
     const eventActivity = addEventActivity.value;
-    if (eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "") {
+    if (eventTitle === "" || eventTimeFrom === "") {
         alert("Please fill all the fields");
         return;
     }
     const timeFromArr = eventTimeFrom.split(":");
     const timeToArr = eventTimeTo.split(":");
     if (timeFromArr.length != 2 ||
-        timeToArr.length != 2 ||
         timeFromArr[0] > 23 ||
-        timeFromArr[1] > 59 ||
-        timeToArr[0] > 23 ||
-        timeToArr[1] > 59) {
+        timeFromArr[1] > 59) {
         alert("Invalid time format");
     }
     const timeFrom = convertTime(eventTimeFrom);
@@ -308,7 +305,8 @@ addEventSubmit.addEventListener("click", () => {
     const newEvent = {
         title: eventTitle,
         activity: eventActivity,
-        time: timeFrom + " - " + timeTo,
+        time: timeFrom,
+        fullTime: timeFrom + " - " + timeTo,
     };
     let eventAdded = false;
     if (eventsArr.length > 0) {
