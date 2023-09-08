@@ -352,6 +352,7 @@ body {
 .event .event:hover .title i,
 .events .event:hover .event-time  {
     color: var(--primary-light-clr);
+
 }
 
 .event:hover,
@@ -368,7 +369,7 @@ body {
 }
 
 .events .event::after {
-    content: "✓";
+    content: "";
     position: absolute;
     top: 50%;
     right: 0;
@@ -382,6 +383,7 @@ body {
 
 .events .event:hover::after {
     display: flex;
+    content: "✘";
 }
 
 .events .no-event{
@@ -1054,7 +1056,7 @@ option:checked,
     position: relative;
 }
 
-.day::after {
+.day:not(.event, .prev-date, .next-date)::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -1066,28 +1068,14 @@ option:checked,
     height: 20px;
     opacity: 0;
     transition: opacity 0.3s ease;
-}
+} 
 
 .day:hover::after {
     opacity: 1;
 }
 
-.dark-mode .day::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -200%);
+.dark-mode .day:not(.event):after {
     background-image: url('/assets/img/plus-dark.png');
-    background-size: cover;
-    width: 20px;
-    height: 20px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.dark-mode .day:hover::after {
-    opacity: 1;
 }
 
 @media screen and (max-width: 1000px) {

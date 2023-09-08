@@ -221,6 +221,7 @@ const addEventActivity = document.querySelector(".event-select") as HTMLFormElem
 addEventBtn.addEventListener("click", () => {
 
     addEventContainer.classList.toggle("active");
+    addEventContainer?.classList.remove("active-day-click");
     //clear the fields
     // faltaria predefinir una fecha..del día
     addEventTitle.value = "";
@@ -247,6 +248,7 @@ days.forEach(day => {
 
 addEventCloseBtn.addEventListener("click", () => {
     addEventContainer?.classList.remove("active");
+    addEventContainer?.classList.remove("active-day-click");
     //clear the fields
     addEventTitle.value = "";
     // addEventFrom.value = "";
@@ -276,6 +278,7 @@ document.addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
         addEventContainer.classList.remove("active");
+        addEventContainer?.classList.remove("active-day-click");
         //clear the fields
         addEventTitle.value = "";
         // addEventFrom.value = "";

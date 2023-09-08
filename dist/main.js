@@ -125,6 +125,7 @@ const description = document.querySelector(".description");
 const addEventActivity = document.querySelector(".event-select");
 addEventBtn.addEventListener("click", () => {
     addEventContainer.classList.toggle("active");
+    addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.remove("active-day-click");
     addEventTitle.value = "";
     addEventTo.value = "";
     description.value = "";
@@ -140,6 +141,7 @@ days.forEach(day => {
 });
 addEventCloseBtn.addEventListener("click", () => {
     addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.remove("active");
+    addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.remove("active-day-click");
     addEventTitle.value = "";
     addEventTo.value = "";
     description.value = "";
@@ -158,6 +160,7 @@ document.addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
         addEventContainer.classList.remove("active");
+        addEventContainer === null || addEventContainer === void 0 ? void 0 : addEventContainer.classList.remove("active-day-click");
         addEventTitle.value = "";
         addEventTo.value = "";
         description.value = "";
