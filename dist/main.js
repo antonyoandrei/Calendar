@@ -219,7 +219,7 @@ function updateEvents(date) {
                         <h3 class="event-title">${event.title}</h3><h3 class="event-title">${event.activity}</h3>
                     </div>
                     <div class="event-time">
-                        <span class="event-time">${event.fullTime}</span>
+                        <span class="event-time">${event.time}</span>
                     </div>
                 </div>
                 `;
