@@ -369,14 +369,11 @@ function addListener() {
 function updateEvents(date: any) {
     let events = "";
     eventsArr.forEach((event) => {
-        // get events at active day only
         if (
             date === event.day &&
             month + 1 === event.month &&
             year === event.year
         ) {
-
-            // then show event on document
 
             event.events.forEach((event: any) => {
                 events += `
@@ -386,7 +383,7 @@ function updateEvents(date: any) {
                         <h3 class="event-title">${event.title}</h3><h3 class="event-title">${event.activity}</h3>
                     </div>
                     <div class="event-time">
-                        <span class="event-time">${event.time}</span>
+                        <span class="event-time">${event.fullTime}</span>
                     </div>
                 </div>
                 `;
@@ -394,16 +391,13 @@ function updateEvents(date: any) {
         }
     });
 
-    //if nothing found
-
-    if ((events === "")) {
+    if (events === "") {
         events = `<div class="no-event">
                     <h3>No Events</h3>
                 </div>`;
     }
 
     eventsContainer.innerHTML = events;
-    //save events when update event called
     saveEvents();
 }
 

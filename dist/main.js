@@ -219,14 +219,14 @@ function updateEvents(date) {
                         <h3 class="event-title">${event.title}</h3><h3 class="event-title">${event.activity}</h3>
                     </div>
                     <div class="event-time">
-                        <span class="event-time">${event.time}</span>
+                        <span class="event-time">${event.fullTime}</span>
                     </div>
                 </div>
                 `;
             });
         }
     });
-    if ((events === "")) {
+    if (events === "") {
         events = `<div class="no-event">
                     <h3>No Events</h3>
                 </div>`;
