@@ -219,7 +219,7 @@ function updateEvents(date) {
                         <h3 class="event-title">${event.title}</h3><h3 class="event-title">${event.activity}</h3>
                     </div>
                     <div class="event-time">
-                        <span class="event-time">${event.time}</span>
+                        <span class="event-time">${event.fullTime}</span>
                     </div>
                 </div>
                 `;
@@ -306,8 +306,11 @@ addEventSubmit.addEventListener("click", () => {
         title: eventTitle,
         activity: eventActivity,
         time: timeFrom,
-        fullTime: timeFrom + " - " + timeTo,
+        fullTime: eventTimeFrom.slice(11, 16) + " " + eventTimeTo.slice(11, 16),
     };
+    if (eventTimeTo) {
+        newEvent.fullTime = eventTimeFrom.slice(11, 16) + " - " + eventTimeTo.slice(11, 16);
+    }
     let eventAdded = false;
     if (eventsArr.length > 0) {
         eventsArr.forEach((item) => {
