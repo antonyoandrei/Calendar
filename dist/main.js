@@ -215,7 +215,6 @@ function updateEvents(date) {
                     </div>
                 </div>
                 `;
-                checkReminder(timeDifferenceMs);
             });
         }
     });
@@ -477,19 +476,6 @@ function clearValidationMessage() {
     addEventTitle.textContent = "";
     addEventTitle.classList.remove("error");
 }
-function checkReminder(minutesLeft) {
-    const reminderSelect = document.getElementById("reminderSelect");
-    const selectedValue = reminderSelect.value;
-    const alarmElement = document.getElementById("customAlarm");
-    if (selectedValue) {
-        const minutesLeft = Number(selectedValue);
-        alarmElement.textContent = `${minutesLeft} minutes left until event starts!`;
-        alarmElement.style.display = "block";
-        setTimeout(() => {
-            alarmElement.style.display = "none";
-        }, minutesLeft * 60000);
-    }
-}
 function getEventsTimer() {
     if (localStorage.getItem("eventsArr")) {
         const eventsArr = JSON.parse(localStorage.getItem("eventsArr") || "[]");
@@ -500,38 +486,27 @@ function getEventsTimer() {
                 const fullTimeParts = fullTime.split(':');
                 const hours = parseInt(fullTimeParts[0]);
                 const minutes = parseInt(fullTimeParts[1]);
-                const fullTimeNumber = hours * 60 + minutes;
-                const fullTimeReminder = parseInt(reminder);
-                const fullTimeResult = fullTimeNumber - fullTimeReminder;
-                const timeNow = new Date();
-                const timeNowMinutes = timeNow.getMinutes();
-                const timeNowHour = timeNow.getHours() * 60;
-                const totalDayMinutes = timeNowMinutes + timeNowHour;
-                const resultTime = fullTimeResult - totalDayMinutes;
-                if (resultTime === fullTimeReminder) {
-                    const customAlarm = document.getElementById('customAlarm');
-                    const minutesLeft = fullTimeReminder;
-                    customAlarm.textContent = `${minutesLeft} minutes left until event starts!`;
-                    customAlarm.style.display = 'block';
-                    setTimeout(() => {
-                        customAlarm.style.display = 'none';
-                    }, 5000);
+                const eventTime = new Date(year, month - 1, day, hours, minutes);
+                const now = new Date();
+                const timeDifferenceMs = eventTime.getTime() - now.getTime();
+                const timeDifferenceMinutes = Math.floor(timeDifferenceMs / (1000 * 60));
+                if (timeDifferenceMinutes <= reminder && timeDifferenceMinutes >= 0) {
+                    const eventId = `${day}-${month}-${year}-${fullTime}`;
+                    const alarmSet = localStorage.getItem(eventId);
+                    if (!alarmSet) {
+                        const alarmElement = document.getElementById('customAlarm');
+                        alarmElement.textContent = `${timeDifferenceMinutes} minutes left until event starts!`;
+                        alarmElement.style.display = 'block';
+                        setTimeout(() => {
+                            alarmElement.style.display = 'none';
+                            localStorage.setItem(eventId, 'true');
+                        }, 5000);
+                    }
                 }
-                console.log("Full Time:", fullTime);
-                console.log("Reminder:", reminder);
-                console.log("Hora en minutos", fullTimeNumber);
-                console.log("Hora en minutos", fullTimeResult);
-                console.log("Reminder en minutos:", fullTimeReminder);
-                console.log("Suma Hora + Reminder: ", fullTimeResult);
-                console.log("Que dia es:", timeNow);
-                console.log("Dia de hoy en minutos:", timeNowMinutes);
-                console.log("Hora de hoy en minutos:", timeNowHour);
-                console.log("Dia de hoy en minutos:", totalDayMinutes);
-                console.log("Resultado minutos pendientes", resultTime);
             });
         });
     }
 }
-setInterval(getEventsTimer, 60000);
+setInterval(getEventsTimer, 10000);
 getEventsTimer();
 export {};
