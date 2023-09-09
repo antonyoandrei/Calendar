@@ -339,7 +339,7 @@ if (themeSwitch) {
 addEventSubmit.addEventListener("click", () => {
     const eventTitle = addEventTitle.value;
     const eventTimeFrom = addEventFrom.value;
-    const eventTimeTo = addEventTo.value;
+    let eventTimeTo = addEventTo.value;
     const eventActivity = addEventActivity.value;
 
     const timeFromArr = eventTimeFrom.split(":");
@@ -353,9 +353,15 @@ addEventSubmit.addEventListener("click", () => {
     if (eventTitle === "" || eventTimeFrom === "" || eventActivity === "") {
         validateActivity(), validateTitle();
         return;
-    } else if (eventTimeTo < eventTimeFrom) {
+    } 
+    
+    if (checkboxFrom.checked && eventTimeTo < eventTimeFrom) {
         validateTime();
         return;
+    }
+
+    if (!checkboxFrom.checked && eventTimeTo !== "") {
+        eventTimeTo = "";
     }
 
     const newEvent: Event = {
@@ -395,7 +401,6 @@ addEventSubmit.addEventListener("click", () => {
 
     addEventContainer.classList.remove('active');
     addEventTitle.value = "";
-    addEventFrom.value = "";
     addEventTo.value = "";
     description.value = "";
 
@@ -481,6 +486,9 @@ checkboxFrom.addEventListener("change", function () {
     } else {
         addEventTo.classList.remove("shown-input");
         addEventTo.classList.add("hidden-input");
+        validationTime.textContent = ""; 
+        addEventTo.classList.remove("error");
+        validationTime.classList.remove("error-animation");  
     }
 });
 
@@ -535,13 +543,19 @@ function validateTime() {
     const eventTimeFrom = addEventFrom.value;
     const eventTimeTo = addEventTo.value;
 
-    if (eventTimeTo < eventTimeFrom) {
-        const validationTime = document.querySelector(".validation-time") as HTMLElement;
-        validationTime.textContent = "End time cannot be earlier than start time.";
-        addEventTo.classList.add("error");
-        validationTime.classList.add("error-animation");
-    } else {
-        const validationTime = document.querySelector(".validation-time") as HTMLElement;
+    const validationTime = document.querySelector(".validation-time") as HTMLElement;
+
+    if (checkboxFrom.checked === true) {
+        if (eventTimeTo < eventTimeFrom) {
+            validationTime.textContent = "End time cannot be earlier than start time.";
+            addEventTo.classList.add("error");
+            validationTime.classList.add("error-animation");
+        } else {
+            validationTime.textContent = "";
+            addEventTo.classList.remove("error");
+            validationTime.classList.remove("error-animation");
+        }
+    } else if (checkboxFrom.checked === false) {
         validationTime.textContent = "";
         addEventTo.classList.remove("error");
         validationTime.classList.remove("error-animation");
