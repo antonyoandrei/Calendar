@@ -200,6 +200,9 @@ function updateEvents(date) {
             month + 1 === event.month &&
             year === event.year) {
             event.events.forEach((event) => {
+                const eventTime = new Date(event.time);
+                const currentTime = new Date();
+                const timeDifferenceMs = eventTime.getTime() - currentTime.getTime();
                 events += `
                 <div class="event">
                     <div class="title">
@@ -211,6 +214,7 @@ function updateEvents(date) {
                     </div>
                 </div>
                 `;
+                checkReminder(timeDifferenceMs);
             });
         }
     });
@@ -282,6 +286,10 @@ addEventSubmit.addEventListener("click", () => {
     const timeFromMin = parseInt(timeFromArr[1], 10);
     const timeFrom = convertTime(eventTimeFrom);
     const timeTo = convertTime(eventTimeTo);
+    if (eventTitle === "" || eventTimeFrom === "" || eventActivity === "") {
+        validateActivity(), validateTitle();
+        return;
+    }
     const newEvent = {
         title: eventTitle,
         activity: eventActivity,
@@ -430,5 +438,19 @@ function validateActivity() {
 function clearValidationMessage() {
     addEventTitle.textContent = "";
     addEventTitle.classList.remove("error");
+}
+function checkReminder(minutesLeft) {
+    const reminderSelect = document.getElementById("reminderSelect");
+    const selectedValue = reminderSelect.value;
+    const alarmElement = document.getElementById("custom_alarm");
+    if (selectedValue) {
+        const minutesLeft = Number(selectedValue);
+        alarmElement.textContent = `${minutesLeft} minutes left until event starts!`;
+        alarmElement.style.display = "block";
+        setTimeout(() => {
+            alarmElement.style.display = "none";
+        }, minutesLeft * 60000);
+    }
+    console.log(`timeDifferenceMs: ${minutesLeft}`);
 }
 export {};

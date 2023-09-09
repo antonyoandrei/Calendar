@@ -350,6 +350,11 @@ addEventSubmit.addEventListener("click", () => {
     const timeFrom = convertTime(eventTimeFrom);
     const timeTo = convertTime(eventTimeTo);
 
+    if (eventTitle === "" || eventTimeFrom === "" || eventActivity === "") {
+        validateActivity(), validateTitle();
+        return;
+    }
+
     const newEvent: Event = {
         title: eventTitle,
         activity: eventActivity,
