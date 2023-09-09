@@ -353,6 +353,9 @@ addEventSubmit.addEventListener("click", () => {
     if (eventTitle === "" || eventTimeFrom === "" || eventActivity === "") {
         validateActivity(), validateTitle();
         return;
+    } else if (eventTimeTo < eventTimeFrom) {
+        validateTime();
+        return;
     }
 
     const newEvent: Event = {
@@ -495,11 +498,14 @@ const titleValidationMessage = document.querySelector(".event-name + .validation
 const activityValidationMessage = document.querySelector(".event-select + .validation-message") as HTMLElement;
 const validationTitle = document.querySelector(".validation-title") as HTMLElement;
 const validationActivity = document.querySelector(".validation-activity") as HTMLElement;
+const validationTime = document.querySelector(".validation-time") as HTMLElement;
 
 addEventTitle.addEventListener("blur", validateTitle);
 addEventTitle.addEventListener("focus", clearValidationMessage);
 addEventActivity.addEventListener("blur", validateActivity);
 addEventActivity.addEventListener("focus", clearValidationMessage);
+addEventTo.addEventListener("blur", validateTime);
+addEventTo.addEventListener("focus", clearValidationMessage);
 
 function validateTitle() {
     const eventTitle = addEventTitle.value.trim();
@@ -512,6 +518,7 @@ function validateTitle() {
         addEventTitle.classList.remove("error");
     }
 }
+
 function validateActivity() {
     const eventActivity = addEventActivity.value;
     if (eventActivity === "") {
@@ -521,6 +528,23 @@ function validateActivity() {
     } else {
         activityValidationMessage.textContent = "";
         addEventActivity.classList.remove("error");
+    }
+}
+
+function validateTime() {
+    const eventTimeFrom = addEventFrom.value;
+    const eventTimeTo = addEventTo.value;
+
+    if (eventTimeTo < eventTimeFrom) {
+        const validationTime = document.querySelector(".validation-time") as HTMLElement;
+        validationTime.textContent = "End time cannot be earlier than start time.";
+        addEventTo.classList.add("error");
+        validationTime.classList.add("error-animation");
+    } else {
+        const validationTime = document.querySelector(".validation-time") as HTMLElement;
+        validationTime.textContent = "";
+        addEventTo.classList.remove("error");
+        validationTime.classList.remove("error-animation");
     }
 }
 

@@ -290,6 +290,10 @@ addEventSubmit.addEventListener("click", () => {
         validateActivity(), validateTitle();
         return;
     }
+    else if (eventTimeTo < eventTimeFrom) {
+        validateTime();
+        return;
+    }
     const newEvent = {
         title: eventTitle,
         activity: eventActivity,
@@ -407,10 +411,13 @@ const titleValidationMessage = document.querySelector(".event-name + .validation
 const activityValidationMessage = document.querySelector(".event-select + .validation-message");
 const validationTitle = document.querySelector(".validation-title");
 const validationActivity = document.querySelector(".validation-activity");
+const validationTime = document.querySelector(".validation-time");
 addEventTitle.addEventListener("blur", validateTitle);
 addEventTitle.addEventListener("focus", clearValidationMessage);
 addEventActivity.addEventListener("blur", validateActivity);
 addEventActivity.addEventListener("focus", clearValidationMessage);
+addEventTo.addEventListener("blur", validateTime);
+addEventTo.addEventListener("focus", clearValidationMessage);
 function validateTitle() {
     const eventTitle = addEventTitle.value.trim();
     if (eventTitle === "") {
@@ -433,6 +440,22 @@ function validateActivity() {
     else {
         activityValidationMessage.textContent = "";
         addEventActivity.classList.remove("error");
+    }
+}
+function validateTime() {
+    const eventTimeFrom = addEventFrom.value;
+    const eventTimeTo = addEventTo.value;
+    if (eventTimeTo < eventTimeFrom) {
+        const validationTime = document.querySelector(".validation-time");
+        validationTime.textContent = "End time cannot be earlier than start time.";
+        addEventTo.classList.add("error");
+        validationTime.classList.add("error-animation");
+    }
+    else {
+        const validationTime = document.querySelector(".validation-time");
+        validationTime.textContent = "";
+        addEventTo.classList.remove("error");
+        validationTime.classList.remove("error-animation");
     }
 }
 function clearValidationMessage() {
