@@ -136,6 +136,7 @@ const addEventTitle = document.querySelector(".event-name") as HTMLInputElement;
 const addEventTo = document.querySelector(".event-time-to") as HTMLInputElement;
 const description = document.querySelector(".description") as HTMLInputElement;
 const addEventActivity = document.querySelector(".event-select") as HTMLSelectElement;
+const addEventReminder = document.querySelector("#reminderSelect") as HTMLSelectElement;
 
 const openAddEventContainer = () => {
     addEventContainer.classList.add("active");
@@ -341,6 +342,7 @@ addEventSubmit.addEventListener("click", () => {
     const eventTimeFrom = addEventFrom.value;
     let eventTimeTo = addEventTo.value;
     const eventActivity = addEventActivity.value;
+    const eventReminder = addEventReminder.value;
 
     const timeFromArr = eventTimeFrom.split(":");
     const timeToArr = eventTimeTo.split(":");
@@ -367,6 +369,7 @@ addEventSubmit.addEventListener("click", () => {
     const newEvent: Event = {
         title: eventTitle,
         activity: eventActivity,
+        reminder: eventReminder,
         time: timeFrom,
         fullTime: eventTimeFrom.slice(11, 16) + " " + eventTimeTo.slice(11, 16),
     };    
@@ -411,6 +414,7 @@ addEventSubmit.addEventListener("click", () => {
         activeDayElem?.classList.add("event");
     }
     initCalendar();
+    getEventsTimer();
 });
 
 function convertTime(time: string) {
@@ -466,7 +470,7 @@ function getEvents() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const textbox = document.getElementById('textbox') as HTMLTextAreaElement;
+    const textbox = document.getElementById('textBox') as HTMLTextAreaElement;
 
     textbox.addEventListener('input', () => {
         if (textbox.value.length > 500) {
@@ -570,7 +574,7 @@ function clearValidationMessage() {
 function checkReminder(minutesLeft:number) {
     const reminderSelect = document.getElementById("reminderSelect") as HTMLSelectElement;
     const selectedValue = reminderSelect.value;
-    const alarmElement = document.getElementById("custom_alarm") as HTMLElement;
+    const alarmElement = document.getElementById("customAlarm") as HTMLElement;
 
     if (selectedValue) {
         const minutesLeft = Number(selectedValue);
@@ -581,5 +585,63 @@ function checkReminder(minutesLeft:number) {
             alarmElement.style.display = "none";
         }, minutesLeft * 60000);
     }
-    console.log(`timeDifferenceMs: ${minutesLeft}`);
+    // console.log(`timeDifferenceMs: ${minutesLeft}`);
 }
+
+// Idea loca
+function getEventsTimer() {
+    if (localStorage.getItem("eventsArr")) {
+        const eventsArr = JSON.parse(localStorage.getItem("eventsArr") || "[]");
+
+        eventsArr.forEach((eventObj: { day: any; month: any; year: any; events: any; }) => {
+            const { day, month, year, events } = eventObj;
+
+            events.forEach((event: { fullTime: any; reminder: any; }) => {
+                const { fullTime, reminder } = event;
+
+                const fullTimeParts = fullTime.split(':');
+                const hours = parseInt(fullTimeParts[0]);
+                const minutes = parseInt(fullTimeParts[1]);
+                const fullTimeNumber = hours * 60 + minutes;
+
+                const fullTimeReminder = parseInt(reminder);
+                const fullTimeResult = fullTimeNumber - fullTimeReminder;
+
+                const timeNow = new Date();
+                const timeNowMinutes = timeNow.getMinutes();
+                const timeNowHour = timeNow.getHours() * 60;
+                const totalDayMinutes = timeNowMinutes + timeNowHour;
+
+                const resultTime = fullTimeResult - totalDayMinutes;
+                if (resultTime === fullTimeReminder) {
+                    const customAlarm = document.getElementById('customAlarm') as HTMLElement;
+                    const minutesLeft = fullTimeReminder;
+                    customAlarm.textContent = `${minutesLeft} minutes left until event starts!`;
+                    customAlarm.style.display = 'block';
+
+                    setTimeout(() => {
+                        customAlarm.style.display = 'none';
+                    }, 5000);
+                }
+
+                console.log("Full Time:", fullTime);
+                console.log("Reminder:", reminder);
+                console.log("Hora en minutos", fullTimeNumber)
+                console.log("Hora en minutos", fullTimeResult);
+
+                console.log("Reminder en minutos:", fullTimeReminder);
+                console.log("Suma Hora + Reminder: ", fullTimeResult);
+
+                console.log("Que dia es:", timeNow);
+                console.log("Dia de hoy en minutos:", timeNowMinutes);
+                console.log("Hora de hoy en minutos:", timeNowHour);
+
+                console.log("Dia de hoy en minutos:", totalDayMinutes);
+                console.log("Resultado minutos pendientes", resultTime);
+            })
+        });
+    }
+}
+setInterval(getEventsTimer, 60000); 
+getEventsTimer();
+
