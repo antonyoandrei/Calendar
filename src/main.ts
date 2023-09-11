@@ -623,31 +623,47 @@ function expiredEvents() {
         events.forEach((event: { fullTime: any; reminder: any; }) => {
             const { fullTime } = event;
 
-            if (typeof fullTime === 'string') {
-                const fullTimeParts = fullTime.split(' - ');
-                if (fullTimeParts.length === 2) {
-                    const endTimeParts = fullTimeParts[1].split(':');
+            const fullTimeParts = fullTime.split(' - ');
 
-                    const endHours = parseInt(endTimeParts[0]);
-                    const endMinutes = parseInt(endTimeParts[1]);
+            if (fullTimeParts.length === 1) {
+                const startTimeParts = fullTimeParts[0].split(':');
+                const startHours = parseInt(startTimeParts[0]);
+                const startMinutes = parseInt(startTimeParts[1]);
 
-                    const eventEndTime = new Date(year, month - 1, day, endHours, endMinutes);
+                const eventStartTime = new Date(year, month - 1, day, startHours, startMinutes);
 
-                    if (now > eventEndTime) {
-                        eventContainers.forEach((eventCont: any) => {
-                            const eventTimeElem = eventCont.querySelector('.event-time');
+                if (now > eventStartTime) {
+                    eventContainers.forEach((eventCont: any) => {
+                        const eventTimeElem = eventCont.querySelector('.event-time');
 
-                            if (eventTimeElem && eventTimeElem.textContent.trim() === fullTime) {
-                                eventCont.classList.add("expired");
-                            }
-                        });
-                    }
+                        if (eventTimeElem && eventTimeElem.textContent.trim() === fullTime) {
+                            eventCont.classList.add("expired");
+                        }
+                    });
+            console.log('start time:',eventStartTime )
+            console.log('now:', now)
+        }
+            } else if (fullTimeParts.length === 2) {
+                const endTimeParts = fullTimeParts[1].split(':');
+
+                const endHours = parseInt(endTimeParts[0]);
+                const endMinutes = parseInt(endTimeParts[1]);
+
+                const eventEndTime = new Date(year, month - 1, day, endHours, endMinutes);
+
+                if (now > eventEndTime) {
+                    eventContainers.forEach((eventCont: any) => {
+                        const eventTimeElem = eventCont.querySelector('.event-time');
+
+                        if (eventTimeElem && eventTimeElem.textContent.trim() === fullTime) {
+                            eventCont.classList.add("expired");
+                        }
+                    });
                 }
             }
         });
     });
 }
-
 
 setInterval(expiredEvents, 1000);
 expiredEvents();
