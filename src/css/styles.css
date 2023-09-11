@@ -1169,6 +1169,7 @@ option:checked,
 .expired {
     text-decoration: line-through;
     opacity: 0.3;
+    transition: opacity 0.5s;
 }
 
 @media screen and (max-width: 1000px) {

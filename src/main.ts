@@ -205,6 +205,8 @@ function addListener() {
                 day.classList.remove("active");
             });
 
+            expiredEvents();
+
             if (target.classList.contains("prev-date")) {
                 prevMonth();
 
@@ -276,7 +278,6 @@ function updateEvents(date: any) {
 
     eventsContainer.innerHTML = events;
     saveEvents();
-    expiredEvents();
 }
 
 const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
@@ -415,7 +416,7 @@ addEventSubmit.addEventListener("click", () => {
     }
     initCalendar();
     getEventsTimer();
-    expiredEvents()
+    expiredEvents();
 });
 
 function convertTime(time: string) {
@@ -614,7 +615,6 @@ function getEventsTimer() {
 
 function expiredEvents() {
     const eventContainers = document.querySelectorAll(".event") as NodeList;
-
     const now = new Date();
 
     eventsArr.forEach((eventObj: { day: any; month: any; year: any; events: any; }) => {
@@ -623,25 +623,33 @@ function expiredEvents() {
         events.forEach((event: { fullTime: any; reminder: any; }) => {
             const { fullTime } = event;
 
-            const fullTimeParts = fullTime.split(':');
-            const hours = parseInt(fullTimeParts[0]);
-            const minutes = parseInt(fullTimeParts[1]);
-            const eventTime = new Date(year, month - 1, day, hours, minutes);
+            if (typeof fullTime === 'string') {
+                const fullTimeParts = fullTime.split(' - ');
+                if (fullTimeParts.length === 2) {
+                    const endTimeParts = fullTimeParts[1].split(':');
 
-            if (now > eventTime) {
-                eventContainers.forEach((eventCont: any) => {
-                    const eventTimeElem = eventCont.querySelector('.event-time');
+                    const endHours = parseInt(endTimeParts[0]);
+                    const endMinutes = parseInt(endTimeParts[1]);
 
-                    if (eventTimeElem && eventTimeElem.textContent.trim() === fullTime) {
-                        eventCont.classList.add("expired");
+                    const eventEndTime = new Date(year, month - 1, day, endHours, endMinutes);
+
+                    if (now > eventEndTime) {
+                        eventContainers.forEach((eventCont: any) => {
+                            const eventTimeElem = eventCont.querySelector('.event-time');
+
+                            if (eventTimeElem && eventTimeElem.textContent.trim() === fullTime) {
+                                eventCont.classList.add("expired");
+                            }
+                        });
                     }
-                });
+                }
             }
         });
     });
 }
 
-expiredEvents()
 
+setInterval(expiredEvents, 1000);
+expiredEvents();
 setInterval(getEventsTimer, 10000);
 getEventsTimer();
