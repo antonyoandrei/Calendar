@@ -262,7 +262,7 @@ function updateEvents(date: any) {
                         <h3 class="event-title">${event.title}</h3><h3 class="event-title">${event.activity}</h3>
                     </div>
                     <div class="event-time">
-                        <span class="event-time">${event.fullTime}</span>
+                        <span>${event.fullTime}</span>
                     </div>
                 </div>
                 `;
@@ -625,25 +625,7 @@ function expiredEvents() {
 
             const fullTimeParts = fullTime.split(' - ');
 
-            if (fullTimeParts.length === 1) {
-                const startTimeParts = fullTimeParts[0].split(':');
-                const startHours = parseInt(startTimeParts[0]);
-                const startMinutes = parseInt(startTimeParts[1]);
-
-                const eventStartTime = new Date(year, month - 1, day, startHours, startMinutes);
-
-                if (now > eventStartTime) {
-                    eventContainers.forEach((eventCont: any) => {
-                        const eventTimeElem = eventCont.querySelector('.event-time');
-
-                        if (eventTimeElem && eventTimeElem.textContent.trim() === fullTime) {
-                            eventCont.classList.add("expired");
-                        }
-                    });
-            console.log('start time:',eventStartTime )
-            console.log('now:', now)
-        }
-            } else if (fullTimeParts.length === 2) {
+            if (fullTimeParts.length === 2) {
                 const endTimeParts = fullTimeParts[1].split(':');
 
                 const endHours = parseInt(endTimeParts[0]);
