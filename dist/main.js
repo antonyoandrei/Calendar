@@ -225,6 +225,7 @@ function updateEvents(date) {
     }
     eventsContainer.innerHTML = events;
     saveEvents();
+    expiredEvents();
 }
 const link = document.querySelector("link[rel~='icon']");
 if (!link) {

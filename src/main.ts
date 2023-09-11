@@ -276,6 +276,7 @@ function updateEvents(date: any) {
 
     eventsContainer.innerHTML = events;
     saveEvents();
+    expiredEvents();
 }
 
 const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
