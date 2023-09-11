@@ -1027,6 +1027,20 @@ body.dark-mode {
     border-radius: 3.125rem;
 }
 
+.dark-mode .events::-webkit-scrollbar {
+    width: 0.4rem;
+}
+
+.dark-mode .events::-webkit-scrollbar-track {
+    background: var(--background-calendar-before-clr);
+    border-radius: 3.125rem;
+}
+
+.dark-mode .events::-webkit-scrollbar-thumb {
+    background: var(--primary-clr);
+    border-radius: 3.125rem;
+}
+
 .event-select option {
     background-color: var(--background-container-light-clr);
 }
@@ -1150,6 +1164,11 @@ option:checked,
 .dark-mode .alarm {
     background-color: var(--primary-clr);
     color: var(--background-container-clr);
+}
+
+.expired {
+    text-decoration: line-through;
+    opacity: 0.3;
 }
 
 @media screen and (max-width: 1000px) {

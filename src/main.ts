@@ -414,6 +414,7 @@ addEventSubmit.addEventListener("click", () => {
     }
     initCalendar();
     getEventsTimer();
+    expiredEvents()
 });
 
 function convertTime(time: string) {
@@ -454,6 +455,7 @@ eventsContainer.addEventListener("click", (e) => {
         });
 
         updateEvents(activeDay);
+        expiredEvents();
     }
 });
 
@@ -608,6 +610,37 @@ function getEventsTimer() {
         });
     }
 }
+
+function expiredEvents() {
+    const eventContainers = document.querySelectorAll(".event") as NodeList;
+
+    const now = new Date();
+
+    eventsArr.forEach((eventObj: { day: any; month: any; year: any; events: any; }) => {
+        const { day, month, year, events } = eventObj;
+
+        events.forEach((event: { fullTime: any; reminder: any; }) => {
+            const { fullTime } = event;
+
+            const fullTimeParts = fullTime.split(':');
+            const hours = parseInt(fullTimeParts[0]);
+            const minutes = parseInt(fullTimeParts[1]);
+            const eventTime = new Date(year, month - 1, day, hours, minutes);
+
+            if (now > eventTime) {
+                eventContainers.forEach((eventCont: any) => {
+                    const eventTimeElem = eventCont.querySelector('.event-time');
+
+                    if (eventTimeElem && eventTimeElem.textContent.trim() === fullTime) {
+                        eventCont.classList.add("expired");
+                    }
+                });
+            }
+        });
+    });
+}
+
+expiredEvents()
 
 setInterval(getEventsTimer, 10000);
 getEventsTimer();
