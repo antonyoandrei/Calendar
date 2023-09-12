@@ -24,7 +24,6 @@ This project is a single-page web application for managing events on a calendar.
         - Displays a new input to add the end date if checked
     - Calculates and displays the duration between start and end date
     - Reminder (checkbox)
-    - Periodically checks for reminders using setInterval
     - Event description
     - Type of event (predifined options)
   - Closes via close button, clicking outside, pressing Escape key or clicking on any day.
