@@ -64,6 +64,11 @@ This project is a single-page web application for managing events on a calendar.
 
 This project demonstrates the implementation of a feature-rich calendar application using semantic HTML5 elements and responsive design techniques. It incorporates user-friendly modals for event creation and details viewing/editing. The project adheres to best practices for code organization and version control. Additionally, it utilizes localStorage for data persistence, ensuring a seamless user experience even after page reloads.
 
+## Preview
+<div align="center">
+<img align="center" src="assets/img/calendarLinkedin.gif" alt="preview" width="400">
+</div>
+
 
 
 
